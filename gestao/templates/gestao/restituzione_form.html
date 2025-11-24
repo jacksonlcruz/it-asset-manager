@@ -1,0 +1,29 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+    <h1 class="mb-4">{{ page_title }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <hr>
+                <button type="submit" class="btn btn-primary">Registra Restituzione</button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Annulla</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Espera a página carregar
+    $(document).ready(function() {
+        // Aplica a mágica do Select2 ao nosso dropdown de dispositivo
+        $('#id_dispositivo').select2({
+            placeholder: "Cerca per hostname o cespite...",
+            allowClear: true
+        });
+    });
+</script>
+{% endblock %}

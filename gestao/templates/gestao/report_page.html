@@ -1,0 +1,134 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+    <h1 class="mb-4">Report e Statistiche</h1>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header">Andamento Mensile delle Assegnazioni (Office vs CAD)</div>
+                <div class="card-body">
+                    <canvas id="assegnazioniChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Andamento Annuale per Motivo Preparazione</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for year, data in annual_data.items %}
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header text-center"><strong>{{ year }}</strong></div>
+                        <div class="card-body">
+                            <canvas id="chart{{ year }}" class="annual-chart" 
+                                    data-labels="{{ data.labels|join:',' }}" 
+                                    data-values="{{ data.data|join:',' }}">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-center">Nessun dato annuale da visualizzare.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">Dispositivi per Marca</div>
+                <div class="card-body"><canvas id="marcaChart"></canvas></div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+             <div class="card">
+                <div class="card-header">Dispositivi da Rottamare</div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-sm table-hover">
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    
+    // --- LÓGICA PARA OS 3 GRÁFICOS ANUAIS ---
+    const annualCanvases = document.querySelectorAll('.annual-chart');
+    annualCanvases.forEach(canvas => {
+        const labels = canvas.dataset.labels.split(',');
+        const values = canvas.dataset.values.split(',').map(Number);
+        const ctx = canvas.getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Numero di Preparazioni',
+                    data: values,
+                    backgroundColor: ['rgba(0, 123, 255, 0.7)', 'rgba(255, 193, 7, 0.7)', 'rgba(220, 53, 69, 0.7)'],
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+    });
+
+    // --- LÓGICA PARA O GRÁFICO DE MARCAS (PIZZA) ---
+    const responseMarca = await fetch("{% url 'dispositivi_per_marca_data' %}");
+    const marcaChartData = await responseMarca.json();
+    const ctxMarca = document.getElementById('marcaChart').getContext('2d');
+    new Chart(ctxMarca, {
+        type: 'pie',
+        data: {
+            labels: marcaChartData.labels,
+            datasets: [{
+                data: marcaChartData.data,
+                backgroundColor: ['#0d6efd', '#6c757d', '#198754', '#dc3545', '#ffc107', '#0dcaf0', '#fd7e14', '#20c997']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'right' } }
+        }
+    });
+
+
+    // --- LÓGICA RESTAURADA PARA O GRÁFICO MENSAL (BARRAS EMPILHADAS) ---
+    const responseAssegnazioni = await fetch("{% url 'assegnazioni_mensili_data' %}");
+    const assegnazioniChartData = await responseAssegnazioni.json();
+    const ctxAssegnazioni = document.getElementById('assegnazioniChart').getContext('2d');
+    
+    new Chart(ctxAssegnazioni, {
+        type: 'bar', // Mudamos para 'bar'
+        data: {
+            labels: assegnazioniChartData.labels,
+            datasets: assegnazioniChartData.datasets // O backend já envia no formato correto
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }
+        }
+    });
+
+
+});
+</script>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2">Elenco Completo Dispositivi</h1>
+    <div>
+        <a href="{% url 'cria_dispositivo_singolo' %}" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i> Aggiungi Singolo</a>
+        <a href="{% url 'cria_lote_dispositivi' %}" class="btn btn-primary"><i class="bi bi-plus-circle-fill"></i> Aggiungi Lote</a>
+    </div>
+</div>
+
+<form method="post" action="{% url 'lista_dispositivi' %}">
+    {% csrf_token %}
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label for="q" class="form-label">Cerca per Hostname o Cespite</label>
+                    <input type="text" id="q_filter" class="form-control" value="{{ request.GET.q }}">
+                </div>
+                <div class="col-md-5">
+                    <label for="stato" class="form-label">Filtra per Stato</label>
+                    <select id="stato_filter" class="form-select">
+                        <option value="">Tutti gli stati</option>
+                        {% for s in stati_disponibili %}
+                            <option value="{{ s }}" {% if request.GET.stato == s %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" id="filter-btn" class="btn btn-primary w-100">Filtra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <button type="submit" name="delete_selected" class="btn btn-danger mb-3">
+                <i class="bi bi-trash-fill"></i> Cancella Selezionati
+            </button>
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all"></th>
+                        <th>
+                            <a href="?sort={% if current_sort == 'hostname' %}-hostname{% else %}hostname{% endif %}&q={{ request.GET.q|default:'' }}&stato={{ request.GET.stato|default:'' }}">Hostname {% if 'hostname' in current_sort %}<i class="bi bi-arrow-{% if current_sort == '-hostname' %}up{% else %}down{% endif %}"></i>{% endif %}</a>
+                        </th>
+                        <th>
+                            <a href="?sort={% if current_sort == 'utente_cognome' %}-utente_cognome{% else %}utente_cognome{% endif %}&q={{ request.GET.q|default:'' }}&stato={{ request.GET.stato|default:'' }}">Utente Assegnato {% if 'utente_cognome' in current_sort %}<i class="bi bi-arrow-{% if current_sort == '-utente_cognome' %}up{% else %}down{% endif %}"></i>{% endif %}</a>
+                        </th>
+                        <th>
+                            <a href="?sort={% if current_sort == 'tipo' %}-tipo{% else %}tipo{% endif %}&q={{ request.GET.q|default:'' }}&stato={{ request.GET.stato|default:'' }}">Tipo {% if 'tipo' in current_sort %}<i class="bi bi-arrow-{% if current_sort == '-tipo' %}up{% else %}down{% endif %}"></i>{% endif %}</a>
+                        </th>
+                        <th>
+                            <a href="?sort={% if current_sort == 'stato' %}-stato{% else %}stato{% endif %}&q={{ request.GET.q|default:'' }}&stato={{ request.GET.stato|default:'' }}">Stato {% if 'stato' in current_sort %}<i class="bi bi-arrow-{% if current_sort == '-stato' %}up{% else %}down{% endif %}"></i>{% endif %}</a>
+                        </th>
+                        <th>Locazione Magazzino</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in dispositivi %}
+                    <tr>
+                        <td><input type="checkbox" name="device_ids" value="{{ d.id }}" {% if d.stato == 'Assegnato' %}disabled{% endif %}></td>
+                        <td><a href="{% url 'dettaglio_dispositivo' pk=d.id %}">{{ d.hostname }}</a></td>
+                        <td>{{ d.utente_attuale|default:"--" }}</td>
+                        <td>{{ d.tipo }}</td>
+                        <td>
+                            {% if d.stato == 'Disponibile' %}<span class="badge bg-success">{{ d.stato }}</span>
+                            {% elif d.stato == 'Assegnato' %}<span class="badge bg-primary">{{ d.stato }}</span>
+                            {% elif d.stato == 'In Bonifica' %}<span class="badge bg-warning text-dark">{{ d.stato }}</span>
+                            {% elif d.stato == 'Riservato' %}<span class="badge bg-info text-dark">{{ d.stato }}</span>
+                            {% else %}<span class="badge bg-secondary">{{ d.stato }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ d.locazione_magazzino|default_if_none:"" }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{% url 'modifica_dispositivo' pk=d.id %}" class="btn btn-warning" title="Modifica"><i class="bi bi-pencil"></i></a>
+                                {% if d.stato != 'Assegnato' %}<a href="{% url 'cancella_dispositivo' pk=d.id %}" class="btn btn-danger" title="Cancella"><i class="bi bi-trash"></i></a>{% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center">Nessun dispositivo trovato con i filtri attuali.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Script para o checkbox "selecionar todos"
+    document.getElementById('select-all').addEventListener('click', function(event) {
+        const checkboxes = document.querySelectorAll('input[name="device_ids"]');
+        checkboxes.forEach(checkbox => {
+            if (!checkbox.disabled) {
+                checkbox.checked = event.target.checked;
+            }
+        });
+    });
+
+    // Script para o botão de filtro
+    document.getElementById('filter-btn').addEventListener('click', function() {
+        const query = document.getElementById('q_filter').value;
+        const stato = document.getElementById('stato_filter').value;
+        
+        // Pega a URL atual sem os parâmetros antigos
+        const currentUrl = new URL(window.location.href.split('?')[0]);
+
+        // Adiciona os novos parâmetros de filtro à URL
+        if (query) {
+            currentUrl.searchParams.append('q', query);
+        }
+        if (stato) {
+            currentUrl.searchParams.append('stato', stato);
+        }
+        
+        // Redireciona o navegador para a nova URL com os filtros
+        window.location.href = currentUrl.toString();
+    });
+</script>
+{% endblock %}

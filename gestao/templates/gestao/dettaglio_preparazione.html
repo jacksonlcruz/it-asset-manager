@@ -1,0 +1,103 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2">Dettaglio Preparazione #{{ preparazione.id }}</h1>
+
+    <div class="btn-group" role="group">
+        <a href="{% url 'modifica_preparazione' pk=preparazione.id %}" class="btn btn-warning">
+            <i class="bi bi-pencil-fill"></i> Modifica
+        </a>
+        {% if preparazione.stato_preparazione != 'Completato' %}
+        <a href="{% url 'cancella_preparazione' pk=preparazione.id %}" class="btn btn-danger">
+            <i class="bi bi-trash-fill"></i> Cancella
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-7">
+    <div class="card">
+        <div class="col-md-7">
+    <div class="card">
+        <div class="card-header">Informazioni Richiesta</div>
+        <div class="card-body">
+            <p><strong>Tipo Richiesta:</strong> {{ preparazione.tipo_richiesta }}</p>
+            <p><strong>Categoria:</strong> {{ preparazione.categoria }}</p>
+            <p><strong>Stato Preparazione:</strong> 
+                {% if preparazione.stato_preparazione == 'Completato' %}
+                    <span class="badge bg-success">{{ preparazione.stato_preparazione }}</span>
+                {% elif preparazione.stato_preparazione == 'Pronto per preparazione' %}
+                     <span class="badge bg-info text-dark">{{ preparazione.stato_preparazione }}</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ preparazione.stato_preparazione }}</span>
+                {% endif %}
+            </p>
+            <p><strong>Luogo Intervento:</strong> {{ preparazione.luogo_intervento.nome|default:"Non specificato" }}</p>
+            <hr>
+
+            {# SE A PREPARAÇÃO JÁ FOI COMPLETADA, MOSTRA OS DADOS FINAIS DA ATRIBUIÇÃO #}
+            {% if preparazione.stato_preparazione == 'Completato' and preparazione.assegnazione %}
+                <h4>Dettagli dell'Assegnazione Finale</h4>
+                <p><strong>Utente:</strong> {{ preparazione.assegnazione.utente }}</p>
+                <p><strong>Dispositivo Assegnato:</strong> {{ preparazione.assegnazione.dispositivo.hostname }}</p>
+                <p><strong>Data Assegnazione:</strong> {{ preparazione.assegnazione.data_assegnazione|date:"d/m/Y" }}</p>
+            
+            {# SE AINDA NÃO FOI COMPLETADA, MOSTRA OS DADOS DA PREPARAÇÃO #}
+            {% else %}
+                <h4>Dettagli della Preparazione</h4>
+                {% if preparazione.tipo_richiesta == 'Sostituzione' %}
+                    <p><strong>Utente:</strong> {{ preparazione.utente|default:"Non specificato" }}</p>
+                    <p><strong>Dispositivo da Sostituire:</strong> {{ preparazione.dispositivo_vecchio.hostname|default:"N/A" }}</p>
+                {% else %}
+                    <p><strong>Nuovo Utente:</strong> {{ preparazione.nome_nuovo_utente }} {{ preparazione.cognome_nuovo_utente }}</p>
+                {% endif %}
+                <p><strong>Nuovo Dispositivo Selezionato:</strong> {{ preparazione.dispositivo_nuovo.hostname|default:"Non ancora selezionato" }}</p>
+            {% endif %}
+            
+            <hr>
+            <p><strong>Data Pianificata:</strong> {{ preparazione.data_pianificazione|date:"d/m/Y H:i"|default:"Non definita" }}</p>
+            <p><strong>Note / Software:</strong> {{ preparazione.note_software|default:"Nessuna" }}</p>
+        </div>
+    </div>
+</div>
+</div>
+
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">Checklist di Preparazione</div>
+            <div class="card-body">
+                <form method="post">
+    {% csrf_token %}
+    <div class="form-check form-switch mb-2">
+        <input class="form-check-input" type="checkbox" name="mail_inviata" id="id_mail_inviata" {% if preparazione.mail_inviata %}checked{% endif %}>
+        <label class="form-check-label" for="id_mail_inviata">Mail Inviata all'utente</label>
+    </div>
+    <div class="form-check form-switch mb-2">
+        <input class="form-check-input" type="checkbox" name="dati_in_scsm" id="id_dati_in_scsm" {% if preparazione.dati_in_scsm %}checked{% endif %}>
+        <label class="form-check-label" for="id_dati_in_scsm">Dati inseriti in SCSM</label>
+    </div>
+    <div class="form-check form-switch mb-2">
+        <input class="form-check-input" type="checkbox" name="in_ars" id="id_in_ars" {% if preparazione.in_ars %}checked{% endif %}>
+        <label class="form-check-label" for="id_in_ars">PC inserito in ARS</label>
+    </div>
+    <div class="form-check form-switch mb-3">
+        <input class="form-check-input" type="checkbox" name="delivery_inviato" id="id_delivery_inviato" {% if preparazione.delivery_inviato %}checked{% endif %}>
+        <label class="form-check-label" for="id_delivery_inviato">Documenti di consegna inviati</label>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-outline-success w-100">Salva Stato Checklist</button>
+
+    {% if preparazione.stato_preparazione != 'Completato' %}
+        <button type="submit" name="finalizza" value="true" class="btn btn-primary w-100 mt-2">
+            <i class="bi bi-check-circle-fill"></i> Finalizza Preparazione e Assegna PC
+        </button>
+    {% endif %}
+</form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

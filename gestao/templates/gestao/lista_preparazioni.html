@@ -1,0 +1,81 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2">Coda di Preparazione PC</h1>
+    <a href="{% url 'crea_preparazione' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle-fill"></i> Crea Nuova Preparazione
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo Richiesta</th>
+                    <th>Categoria</th>
+                    <th>Luogo</th>
+                    <th>Dettagli Utente</th>
+                    <th>Tecnico Resp.</th>
+                    <th>Stato</th>
+                    <th>Data Pianificata</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in preparazioni %}
+                <tr>
+                    <td>#{{ p.id }}</td>
+                    <td>{{ p.tipo_richiesta }}</td>
+                    <td>
+                        {% if p.categoria == 'Priorità' %}
+                        <span class="badge bg-danger">{{ p.categoria }}</span>
+
+                        {% elif p.categoria == 'Stagista' %}
+                        <span class="badge bg-info text-dark">{{ p.categoria }}</span>
+
+                        {% elif p.categoria == 'Interinale' %}
+                        <span class="badge bg-primary">{{ p.categoria }}</span>
+
+                        {% elif p.categoria == 'Riassegnazione' or p.categoria == 'Extra' %}
+                        <span class="badge bg-warning text-dark">{{ p.categoria }}</span>
+
+                        {% else %} <span class="badge bg-secondary">{{ p.categoria }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ p.luogo_intervento.nome|default:"--" }}</td>
+                    <td>
+                        {% if p.tipo_richiesta == 'Nuova Assunzione' %}
+                        {{ p.nome_nuovo_utente }} {{ p.cognome_nuovo_utente }}
+                        {% else %}
+                        {{ p.utente }}
+                        {% endif %}
+                    </td>
+                    <td>{{ p.tecnico_responsabile.username|default:"--" }}</td>
+                    <td>
+                        {% if p.stato_preparazione == 'Completato' %}
+                        <span class="badge bg-success">{{ p.stato_preparazione }}</span>
+                        {% elif p.stato_preparazione == 'Pronto per preparazione' %}
+                        <span class="badge bg-info text-dark">{{ p.stato_preparazione }}</span>
+                        {% else %}
+                        <span class="badge bg-secondary">{{ p.stato_preparazione }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ p.data_pianificazione|date:"d/m/Y H:i"|default:"--"}}</td>
+                    <td>
+                        <a href="{% url 'dettaglio_preparazione' pk=p.id %}"
+                            class="btn btn-sm btn-outline-primary">Dettagli</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center">Nessuna preparazione in coda.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

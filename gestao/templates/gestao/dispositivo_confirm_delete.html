@@ -1,0 +1,26 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card text-center border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h3>Conferma Cancellazione</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead">Sei sicuro di voler cancellare permanentemente il seguente dispositivo?</p>
+                        <h4><strong>{{ dispositivo.hostname }}</strong> ({{ dispositivo.modello }})</h4>
+                        <p class="text-muted">Questa azione non può essere annullata.</p>
+                        <hr>
+                        <form method="post">
+                            {% csrf_token %}
+                            <a href="{% url 'lista_dispositivi' %}" class="btn btn-secondary">Annulla</a>
+                            <button type="submit" class="btn btn-danger">Sì, Cancella Permanentemente</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

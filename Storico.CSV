@@ -1,0 +1,200 @@
+Apertura Ticket;Nome;Cognome;Dipartimento;Nome Vecchio PC;Status;In carico a;Brand;Modello;Data Arrivo;Hostname;Cespite;PSW CIRESON;Data pianificazione;Ora Pianificazione;Note
+SR3512054;Lorenzo;Schuermann;IG/G;ITDGTOL00073122;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076850;76850;Montanha850;02/01/2024;;
+SR3512102;Patrice;Latu;IG/F-12;ITDGTOC00069360;Riassegnazione/Extra;Jackson;HP;HP Z8 Fury;17/12/2024;ITDGTOC00076607;76607;Avo607;02/01/2025;;Anaconda
+SR3502959;Barbara;D Esposito;IG/SH-2;ITDGTOL00070568;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076845;76845;Massaranduba845;08/01/2025;08:30;Autocad-Photoshop-ThinkCell-AcrobatProDC (magari il pro non serve)
+SR3503281;Alessandra;Baffo;IG/SH-2;ITDGTOL00073637;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076846;76846;Lenovo846;08/01/2025;13:30;Autocad-Photoshop-ThinkCell-Sketchup
+SR3512084;Giuseppe;Melissano;IG/ES;ITDGTOL00069810;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076824;76824;Montanha824;08/01/2025;09:00;Catia-Connect-JT2GO-Kisters-NovoViewer-Filmora14-Webex-Avon-VmwareHorizonClient-AcrobatDC-3DConnection
+SR3471480;Daniele;Gerbino;IG/EG-C;ITDGTOL00070964;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076795;76795;Chefe795;09/01/2025;08:30;Catia V5, Photoshop, Connect, Think-Cell di PPT, KeePass
+SR3512060;Mirko Simon;Krueger;IG/EG-Q;;Nuovo assunto;Giovanni;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076851;76851;Montanha851;02/01/2025;;ThinkCell
+SR3516332;Letizia;Gatti;IG/F-1;;Nuovo assunto;Daniela;HP;HP EliteBook;29/07/2022;ITDGTOL00071521;71521;;13/01/2025;;
+SR3503651;Tommaso;Francescon;IG/G;;Priorità/Stagisti/Scorta;Daniela;HP;HP EliteBook;;ITDGTOL00072428;72428;;13/01/2025;;ThinkCell
+SR3503263;Lucio;Schioppo;IG/EE-1;ITDGTOL00073671;Consegnato;Giovanni;HP;Zbook;01/10/2024;ITDGTOL00076821;76821;Lenovo821;14/01/2024;14:00;Photoshop, Unity, suite Jetbrains e Android Studio
+SR3517473;Federico;Milani;IG/D-2;ITDGTOL00073351;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00073637;73637;Sanguinella76;;;Photoshop, Premiere, XD, Figma. AUTODESK ALIAS AUTOSTUDIO 2021 UPDATE 3--ALIAS SURFACE 2023--ADOBE PHOTOSHOP 2023--ADOBE ILLUSTRATOR 2023--VRED DESIGN 2023.3--KEYSHOT 2023--BLENDER 
+SR3512090;Paolo;Martini;IG/D-61;ITDGTOL00069314;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076825;76825;Montanha825;16/01/2025;08:30;Catia-Connect-AliasSpeedform2019-Surface2025-Vred-IcemSurf-WacomDriver-Photoshop
+SR3502965;Fabio;Gaido;IG/ER-2D;ITDGTOL00070562;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076816;76816;Massaranduba816;17/01/2025;10:00;Catia - Connect
+SR3518201;Luca;Grieco;IG/EE-4;ITDGTOL00072274;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076828;76828;Procon828;20/01/2025;11:30;CP-Tool - EXAM 5.3 - Git - Idex - InteelliJ IDEA - Python - MATLAP R2021a - Visio - Notepad++ - Odis 18 - SourceTree - Steex 3.1 - System42 - Tera Term - ThinkCell - TortoiseGit - TortoiseSVN - Canalyzer 15 - Canoe 14 - WinMerge - WinSCP
+SR3512072;Katharina Maria Sophia;Strejtschek;IG/S;ITDGTOL00070709;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076852;76852;Montanha852;20/01/2025;10:30;ThinkCell
+SR3525491;Antonio;Casu;IG/G;;Consegnato;Jackson;Lenovo;X13 Yoga G4 I5;09/08/2024;ITDGTOL00076370;76370;Desespero370;;;Acrobat Writer - Zoom - GoSign Desktop
+SR3527663;Kim Valerie;Blankenheim;IG/ER-N;;Priorità/Stagisti/Scorta;Jackson;HP;Zbook;;ITDGTOL00070966;70966;;20/01/2025;;Ansa-Loco-Animator-Kisters-Connect-Catia-TurboVNC-Putty
+SR3503118;Mattia;Griva Zabert;IG/GT-E;ITDGTOL00069457;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076820;76820;Lenovo820;;;Connect - Catia
+SR3512096;Marco; Sanino;IG/ER-3;ITDGTOL00069186;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076826;76826;Montanha826;21/01/2025;09:00;Catia-Connect-Photoshop-Avon-Tevon-TrexFIA-Vera-cPlace
+SR3523700;Umberto;Cian;IG/EE-1;;Consegnato;Giovanni;Geekom;Mini IT8 GM08i5T;;ITDGTOC00098501;;Geek98501!;;;Canoe-VectorVAGSecurityAddOnInstaller_3.2.13.0-EPM-Idex-EsoTrace-FoxTerm-TeaTerm
+SR3502977;Giuseppe;Falchi;IG/EL-2;ITDGTOL00069755;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076818;76818;Massaranduba818;22/01/2025;13:30;Catia-Connect
+SR3524742;Marco;Malinverno;IG/EE-3;ITDGTOL00070694;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076856;76856;Frio856;23/01/2025;11:00;System42, AVON, TEVON, Ti-Rex, Enterprise Architect, Audi Workbench, Cp-tool, IDEX, ODIS, beyond trust, Slack, WinSCP, Putty, CANoE e tutti i sw Vector, Wireshark, Python
+SR3531379;Hilary;Suleri;IG/EE-1;ITDGTOL00070987;Consegnato;Giovanni;HP;EliteBook;;ITDGTOL00073671;73671;;29/01/2025;;
+SR3537079;Nicolas Federico;Anselmo;IG/EE-5;;Consegnato;Giovanni;HP;Zbook;;ITDGTOL00071379;;;;;
+SR3539375;Daniele;Costarella;IG/EE-2;;Consegnato;Giovanni;HP;EliteBook;;ITDGTOL00073613;73613;;05/02/2025;;VirtualBox-WinSCP-VSCode-Notepad++-Putty-Phyton-ThinkCell-KiCAD-Kisters
+SR3537901;Giovannirgia;Burzio;IG/S-1;ITDGTOL00069430;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076857;76857;Primeironovoad857;05/02/2025;;
+SR3516322;Antonello;Scalise;IG/P-S;ITDGTOL00069153;Consegnato;Jackson;HP;EliteBook;04/04/2024;IGITMONCL076179;76179;Correria179;06/02/2025;;
+SR3489060;Marco;Giovannilitti;IDD/EE-5;ITDGTOL00076115;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;09/08/2024;ITDGTOL00076853;76853;Avo853;06/02/2025;08:30;ODIS - Cameo - Canoe (piu recente) + Vector Hardware Configuration - Wireshark - PyCharm - AxF Viewer
+SR3524736;Federica Maria;Scoponi;IG/EE-3;ITDGTOL00069620;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076855;76855;Frio855;10/02/2025;11:30;Doors, System 42, Think-cell, Idex, Odis
+SR3541923;Carmelo Claudio;Femia;IG/EE-4;ITDGTOL00069399;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076859;76859;Pandeiro859;;;
+SR3541929;Lucia;Mosca;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098502;;Cruzeiro502;;;Canoe 16
+SR3541935;Lucia;Mosca;IG/EE-4;;Consegnato;;HP;Z2 Mini;30/01/2025;IGITMONCD098503;;Cruzeiro503;;;Canoe 16
+SR3524728;Gabriele;Combina;IG/S-32;ITDGTOL00069277;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076854;76854;Frio854;10/02/2025;15:30;Toad, FileZilla
+SR3539281;Paolo;Bianco;IG/EE-2;;Consegnato;Giovanni;HP;MiniPC;;ITDGTOC00071650;71650;Mini71650!;;;LanguagePackENG-RemoteDekstop IG/EE-2 All-Canoe18-DriverFTDI-EPM
+SR3539659;Paolo;Bianco;IG/EE-2;;Consegnato;Giovanni;;;;ITDGTOL00071649;71649;Mini71649!;;;LanguagePackENG-RemoteDekstop IG/EE-2 All-Canoe18-DriverFTDI-EPM
+SR3544026;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098504;;Cruzeiro504;;;Vector VtestStudio8 - Vector CANoe 16 SP7 - VNC (per usarlo da remoto) - FoxTerm - ODIS - ADB - Python 3.11
+SR3544032;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098505;;Cruzeiro505;;;Vector VtestStudio8 - Vector CANoe 16 SP7 - VNC (per usarlo da remoto) - FoxTerm - ODIS - ADB - Python 3.11
+SR3544038;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098506;;Cruzeiro506;;;Vector VtestStudio8 - Vector CANoe 16 SP7 - VNC (per usarlo da remoto) - FoxTerm - ODIS - ADB - Python 3.11
+SR3544044;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098507;;Cruzeiro507;;;Vector VtestStudio8 - Vector CANoe 16 SP7 - VNC (per usarlo da remoto) - FoxTerm - ODIS - ADB - Python 3.11
+SR3544050;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098508;;Cruzeiro508;;;Vector VtestStudio8 - Vector CANoe 16 SP7 - VNC (per usarlo da remoto) - FoxTerm - ODIS - ADB - Python 3.11
+SR3544056;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098509;;Cruzeiro509;;;Vector VtestStudio8 - Vector CANoe 16 SP7 - VNC (per usarlo da remoto) - FoxTerm - ODIS - ADB - Python 3.11
+SR3545168;Tommaso Junior;Costa;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098510;;Goias510;;;tortoiseGIt, beyondtrust
+SR3545174;Tommaso Junior;Costa;IG/EE-4;;Consegnato;Jackson;HP;Z2 Mini;30/01/2025;IGITMONCD098511;;Goias511;;;Teststand 2023 - labview - Canoe 17 SP15 - Driver Vector - Idex e Cptool
+SR3499713;Nunzio;Musco;IG/P-72;ITDGTOL00065943;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076812;76812;Clebinho812;;;WorkNC - TNCremo30
+SR3499719;Nunzio;Musco;IG/P-72;ITDGTOL00059809;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076813;76813;Clebinho813;;;WorkNC - TNCremo30
+SR3499725;Nunzio;Musco;IG/P-72;ITDGTOL00070762;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076814;76814;Clebinho814;;;WorkNC - TNCremo30
+SR3503269;Tommaso;Di Maio;IG/EE-1;ITDGTOL00073672;Consegnato;Giovanni;HP;Zbook;01/10/2024;ITDGTOL00076822;76822;Lenovo822;;;Photoshop - Unity - Jetbrains - Android Studio
+SR3544354;Paolo;Bianco;IG/EE-2;;Consegnato;Giovanni;HP;HP Mini;;ITDGTOC00071646;;Mini71646!;;;LanguagePackENG-RemoteDekstop IG/EE-2 All-Canoe18-DriverFTDI-EPM
+SR3544357;Paolo;Bianco;IG/EE-2;;Consegnato;Giovanni;HP;HP Mini;;ITDGTOC00071648;;Mini71648!;;;LanguagePackENG-RemoteDekstop IG/EE-2 All-Canoe18-DriverFTDI-EPM
+SR3544902;Andrea;Raballo;IG/S-31;ITDGTOL00073666;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076865;76865;Atletico865;;;
+SR3539922;Giovanni;Pizzi;IG/D-3;ITDGTOL00070757;Consegnato;Jackson;HP;Zbook;01/10/2024;IGITMONCL076831;76831;Cruzeiro831;18/02/2025;08:30;Alias-Photoshop-Blender
+SR3544878;Stefano;Ciocca;IG/EG-Q;ITDGTOL00065749;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076861;76861;Atletico861;18/02/2025;12:00;ShareFile, AVx/EVx, MDM Dala, AVON
+SR3544896;Monica Pia;Capitanio;IG/D-S;ITDGTOL00070631;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076864;76864;Atletico864;18/02/2025;14:30;
+SR3544884;Rosanna;Racioppo;IG/F;ITDGTOL00069865;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076862;76862;Atletico862;20/02/2025;08:30;GoSign (Serve per Infocert e file p7m ) -Thunderbird (per backup PEC che esegue Vigna, è importante sia trasferito cosi com’è in quanto ci sono le vecchie pec importanti) -Acrobat Writer
+SR3539916;Paolo;Azzolina;IG/EL-2;ITDGTOL00069216;Consegnato;Jackson;HP;Zbook;01/10/2024;IGITMONCL076830;76830;Cruzeiro830;19/08/2025;;Catia-Connect-Pointfix
+SR3551443;Giovanni;Balbi;IG/S-31;IGITMONCL071759;Consegnato;Giovanni;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076870;76870;Fedor870;;;
+SR3550300;Omar;Farina;IG/S-31;ITDGTOL00070717;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076869;76869;Fedor869;;;
+SR3551449;Jackson;Linhares Cruz;IG/S-31;ITDGTOL00072940;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076871;76871;Fedor871;;;
+SR3518209;Vincenzo Graziano;Stornanti;IG/EE-1;ITDGTOL00070538;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076829;76829;Procon829;21/02/2025;08:30;HAXM-AndroidStudio-FTDI Driver-PeakCAN driver
+SR3544866;Andrea;Saltarelli;IG/EE-5;ITDGTOL00072269;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076860;76860;Atletico860;24/02/2025;10:30;DriverVector-Canalyzer15-Canape16-Canoe16-Cameo-Odis-Idex-TicketWizard-Notepad++-WireShark-EPM-ThinkCell
+SR3544890;Gianluca;Mari;IG/EE-5;ITDGTOL00070520;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076863;76863;Atletico863;25/02/2025;08:30;Canape16/19-Canalyzer15-VectorDriver-VXconfig4,7-Idex-CpTool-Avon-HEADmonitor-Odis-AudiWorkbench-Cluu-Kisters-EPM-ThinkCell
+SR3503275;Federico;Ciriolo;IG/EE-4;ITDGTOL00076117;Consegnato;Jackson;HP;Zbook;01/10/2024;ITDGTOL00076823;76823;Lenovo823;25/02/2025;09:00;Autodesk Inventor 2025 - Autodesk Autocad Electrical - Visio - Idex - Odis - CpTool - Pycharm - Python
+SR3541917;Daniele;Costarella;IG/EE-2;ITDGTOL00072250;Consegnato;Giovanni;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076858;76858;Pandeiro858;25/02/2025;08:30;VirtualBox-WinSCP-VSCode-Notepad++-Putty-Phyton-ThinkCell-KiCAD
+SR3553076;Vito;Aldo;IG/S-31;;Riassegnazione/Extra;Jackson;HP;Zbook;;ITDGTOL00065612;65612;Italdesign2025!;;;Intall Linux
+SR3554562;Eugenio;Fischetti;IG/ER-S;ITDGTOL00069304;Consegnato;Jackson;Hp;Zbook;13/11/2023;IGITMONCL073351;73351;Italdesign202473351;26/02/2025;14:00;Catia-Connect-IcemSurf-Surface2025
+SR3549576;Bianco;Bianco;IG/EE-2;;Consegnato;Giovanni;HP;FlexRay;;IGITMONCD071642;71642;Monc71642!;;;All EE sw + EPM
+SR3549682;Bianco;Bianco;IG/EE-2;;Consegnato;Giovanni;HP;FlexRay;;IGITMONCD071644;71644;Monc71644!;;;All EE sw + EPM
+SR3544908;Gianluca;Rapelli;IG/ER-N;ITDGTOL00069418;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076866;76866;Atletico866;28/02/2025;08:30;
+SR3548681;Lorenzo;Gonella;IG/EG-I;ITDGTOL00071544;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076364;76364;Tigre364;03/03/2025;10:00;Idex - CP-Tool - Citrix - Canoe
+SR3471498;Luca;Giovannirgi;IG/EE-1;ITDGTOL00069191;Consegnato;Jackson;HP;Zbook;01/10/2024;IGITMONCL076796;76796;Chefe796;04/03/2025;08:30;Catia V5, Connect, Avon, Tevon, 3D_Evolution 4.2 SP0 188.1
+SR3550271;Francesco;Della Beffa;IG/EI-1;ITDGTOL00069628;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076867;76867;Fedor867;05/03/2025;08:30;Connect , PFV4 (Phototron Fastcam Viewer 4), Avon, Citrix, VViewer, Kisters, Visverdi e ho un Account Aston Martin con Horizon che vorrei non perdere
+SR3555965;Mattia;Campagnola;IG/EE-3;;Consegnato;Giovanni;HP;Zbook;;IGITMONCL072274;72274;;;;Visual studio code, Visual studio 2022, Intellij IDEA ultimate con JDK 17, docker desktop, nodejs, EPM
+SR3502971;Giovanni;Marino;IG/ER-S;ITDGTOL00069749;Consegnato;Jackson;HP;Zbook;01/10/2024;IGITMONCL076817;76817;Massaranduba817;05/03/2025;13:45;IcemSurf - Alias - Catia - Point to fix - Mirror OP, Rhino 7 (Grasshoper) - Vred - Connect
+SR3552808;Adriano;Savoca;IG/S-3;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077540;77540;Tio540;;;
+SR3552775;Tommaso;Tarricone;IG/SH;ITDGTOL00070440;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077537;77537;Tio537;07/03/2025;08:30;
+SR3554882;Cinzia;Di Tullo;IG/B-1;ITDGTOL00069172;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077545;77545;Acucena545;11/03/2025;09:00;
+SR3561763;Anna;Caivano;IG/ES;ITDGTOL00069165;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077547;77547;Bugre547;11/03/2025;09:30;
+SR3555968;Mattia;Campagnola;IG/EE-3;;Consegnato;Giovanni;HP;Zbook;;IGITMONCL071759;71759;;;;Visual studio code, Visual studio 2022, Intellij IDEA ultimate con JDK 17, docker desktop, nodejs, EPM
+SR3552795;Andrea Cosimo;Scardaci;IDD/EE-2;ITDGTOL00069281;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077539;77539;Tio539;12/03/2025;08:30;
+SR3561774;Massimo;Alberti;IG/F-1;ITDGTOL00068919;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077548;77548;Bugre548;12/03/2025;09:00;
+SR3561873;Riccardo;Gamba;IG/B-2;ITDGTOL00071212;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077557;77557;Bugre557;12/03/2025;;
+SR3561791;Sara;Dominietto;IG/G;ITDGTOL00069175;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077550;77550;Bugre550;13/03/2025;08:30;Adobe Writer - NO DOCKING
+SR3561861;MARCO;Panacciulli;IG/B;ITDGTOL00069151;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077556;77556;Bugre556;13/03/2025;09:00;ThinkCell
+SR3561815;Maria Elisa;Lunetti;IG/S;ITDGTOL00069170;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077552;77552;Bugre552;13/03/2025;14:00;Adobe Writer
+SR3561839;Andrea Francesco;Porta;IG/V;ITDGTOL00069140;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077554;77554;Bugre554;14/03/2025;09:00;NO DOCKING
+SR3552814;Michele;Ferrara;IG/EE-4;ITDGTOL00071524;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077541;77541;Tio541;14/03/2025;09:00;Odis - idex - Python - Canoe - Beyond Trust
+SR3561850;Marina;Modica;IG/B;ITDGTOL00069176;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077555;77555;Bugre555;14/03/2025;14:30;ThiknCell
+SR3552820;Dino;Donetti;IG/ER-3;ITDGTOL00060173;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077542;77542;Tio542;17/03/2025;10:45;lavoro su un progetto ASTON MARTIN, quindi ho bisogno della connessione VDI con il Cliente (VMware Horizon Client?)-Kisters
+SR3554873;Franco;Bay;IG/V-P;ITDGTOL00069083;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077544;77544;Acucena544;17/03/2025;;
+SR3554888;Fausto;Andruetto;IG/EG-8;ITDGTOL00068431;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077546;77546;Acucena546;17/03/2025;10:30;TiSyncro e JT2Go
+SR3563980;Bianco;Paolo;IG/EE-2;;Consegnato;Giovanni;;;;IGITMONCD071643;71643;Tarek71643!;;;
+SR3561785;Federica;Beltramo;IG/G;ITDGTOL00069163;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077549;77549;Bugre549;19/03/2025;08:30;Adobe Writer
+SR3563034;Marco;Ceaglio;IG/GT-E;ITDGTOL00070528;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077558;77558;Ipabinha558;19/03/2025;09:00;
+SR3565212;Pierluigi;Pugliese;IG/EE-4;ITDGTOL00073455;Consegnato;Jackson;;;;IGITMONCL072922;72922;Salisburgo2023!!;19/03/2025;09:00;Idex, ODIS, CP Tool, Kicad, Autodesk Inventor, System42, LabView, testStand, Canoe 18
+SR3512165;GiovannirGiovanni;Longo;IDD/EE-6;ITDGTOL00069737;Consegnato;Matthias;Lenovo;ThinkPad T14 Gen 4;01/10/2024;ITDGTOL00076357;76357;Invencivel357;03/03/2025;;
+SR3563046;Luca;Carminati;IG/Q-1;ITDGTOL00070626;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077560;77560;Ipabinha560;20/03/2025;08:30;
+SR3561803;Alberto;Casetta;IG/Q-2;ITDGTOL00069286;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077551;77551;Bugre551;21/03/2025;09:30;KISTERS, CISCO WEBEX MEETING, MIRROR OP
+SR3569262;Domenico;Policaro;IG/P-10;ITDGTOL00069210;Consegnato;Jackson;HP;Zbook;;IGITMONCL073340;73340;Endergirl340!;26/03/2025;09:00;CATIA - Novo Viewer - JT2Go - Kister - Avx - Connect - CheckIT - Power Bi - Think-cell
+SR3563073;Andrea Cosimo;Scardaci;IDD/EE-2;IGITMONCL077539;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077564;77564;Ipabinha564;;;
+SR3518193;Sebastiano;Trovato;IG/ER-2E;ITDGTOL00068810;Consegnato;Jackson;HP;Zbook;01/10/2024;IGITMONCL076827;76827;Procon827;27/03/2025;13:00;Catia V5, Connect, Visual m, jt2go, avon, tevon, vmp
+SR3550281;Simone;Oberti;IG/ER-4;ITDGTOL00070774;Consegnato;Giovanni;Lenovo;ThinkPad T14 Gen 4;01/10/2024;IGITMONCL076868;76868;Fedor868;28/03/2025;09:00;Avon - Kisters-SAP_PT3-AVVX
+SR3552789;Giulio;Toesca Di Castellazzo;IG/Q-2;ITDGTOL00069836;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077538;77538;Tio538;28/03/2025;13:45;Kisters - Think Cell
+SR3563067;Gian Nico;Ghio;IG/ER-7;ITDGTOL00069841;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077563;77563;Ipabinha563;31/03/2025;11:30;
+SR3563082;Sara;Ducatto;IG/S-1;;Consegnato;Daniela;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077565;77565;Ipabinha565;01/04/2025;;
+SR3565222;Carmelo;Romano;IG/EE-1;ITDGTOL00070948;Consegnato;Jackson;HP;Zbook;;IGITMONCL072940;72940;Italdesign72940@!;31/03/2025;15:00;JetBrain Toolbox - PyCharm - Android Studio - Postman - WinMerge - mRemoteNG - Notepad++ - Git bash - TeamWire - Intel Haxm plugin (da Android Studio) - OBS Studio - Python - GitSCM - GIMP - DRAW.IO - Driver GPU NVIDIA CUDA (TUTTI) (se la scheda è NVIDIA)
+SR3550492;Francesco;Polimeni;IG/ER-4;ITDGTOL00069739;Consegnato;Jackson;HP;Zbook;13/11/2023;IGITMONCL073343;73343;Pixel343!;03/04/2025;08:30;Catia V5, Connect, VViewer, KINOVEA, Kisters 3DViewStation
+SR3580028;Alberto;Casetta;IG/Q-2;;Riassegnazione/Extra;Jackson;HP;Zbook;;IGITMONCL072473;72473;Coltre473;;;Catia - Connect
+SR3571488;Denis;Marenghi;IG/P-83;ITDGTOL00069471;Consegnato;Jackson;HP;Zbook;;IGITMONCL071372;71372;Cutrella372;;;Catia - Connect - Autoforming con un nuovo modulo per HotForming
+SR3563736;Francesca;Paone;IDD/G;ITDGTOL00072460;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077567;77567;Valadares567;;;
+SR3563058;Clotilde;Bettini;IG/F;ITDGTOL00069830;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077562;77562;Ipabinha562;04/04/2025;13:45;Adobe Writer
+SR3580261;Chukwuebuka Patrick;Ejibenam;IG/EE-1;;Consegnato;Jackson;HP;Zbook;;IGITMONCL073342;73342;;;;Catia-Connect-Canoe-EPM-ThinkCell-Idex-Notepad++
+SR3580300;Lucia;Mosca;IG/EE-4;;Consegnato;Jackson;HP;Engage Flex Mini;27/12/2024;IGITMONCD098512;;Tosse512;;;Vector vTeststudio 8 - CANoe 17 SP5 + Add-on VAG Tool and BAP Support - Beyond Trust
+SR3582315;Federica;Beltramo;IG/G;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077549;77549;Bugre549;19/03/2025;08:30;Adobe Writer
+SR3563742;Alberto;Procopio;IG/F-1;ITDGTOL00071213;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077568;77568;Valadares568;07/04/2025;;Adobe Writer - Go Sign
+SR3554867;Eleonora;Lepori;IG/S-2;ITDGTOL00068445;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077543;77543;Acucena543;07/04/2025;10:30;
+SR3579303;Paolo;Bianco;IG/EE-2;;Consegnato;Giovanni;HP;EngageFlex Mini;;IGITMONCD071647;71647;Astrid71647!;;;All IG/EE-2
+SR3489084;Oscar;Cantaro;IG/P-82;;Consegnato;Emanuele;HP;Zbook;01/10/2024;ITDGTOL00076804;76804;Invencivel804;;;WorkNC - TNCremo30
+SR3493226;Oscar;Cantaro;IG/P-82;;Consegnato;Emanuele;HP;Zbook;01/10/2024;ITDGTOL00076810;76810;Tigre810;;;WorkNC - TNCremo30
+SR3493232;Oscar;Cantaro;IG/P-82;;Consegnato;Emanuele;HP;Zbook;01/10/2024;ITDGTOL00076811;76811;Tigre811;;;WorkNC - TNCremo30
+SR3561827;Arne;Heinrichs;IG/F;ITDGTOL00071015;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077553;77553;Bugre553;09/04/2025;09:00;Think Cell
+SR3563727;Marco;Valsania;IG/GT-E;ITDGTOL00071361;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077566;77566;Valadares566;09/04/2025;14:30;Photoshop, Acrobat DC (non solo reader), Jabra direct, Kisters, Zoom
+SR3550498;Oscar;De Bortoli;IG/EI-1;ITDGTOL00069740;Consegnato;Jackson;HP;Zbook;29/04/2024;IGITMONCL076115;76115;Panela115;10/04/2025;08:30;Catia-Connect
+SR3563754;Stefano;Ciocca;IG/EG-Q;IGITMONCL076861;Consegnato;;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077570;77570;Valadares570;10/04/2025;;ShareFile, AVx/EVx, MDM Dala, AVON - Vsignalyzer22
+SR3563760;Monica;Ferrero;IG/GT-D;ITDGTOL00073347;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077571;77571;Valadares571;;;Acrobate Writer (non solo Reader), think-cell, Kisters 3D Viewer, Connect
+SR3563748;Francesco;Breveglieri;IG/EE-5;#VALORE!;Nuovo assunto;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077569;77569;Valadares569;15/04/2025;;Canape 16-19-Canalyzer 16 sp6- Canoe11-Canoe15 sp4-VXconfig4,7-idex-cptool-citrixworkspace-odis.audiworkbench4.0-kisters-epm-thinkcell
+SR3588611;Andrea;Raballo;IG/S-31;IGITMONCL076865;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077574;77574;Disco574;;;
+SR3585506;Alberto;Casetta;IG/Q-2;;Consegnato;;ROG NUC;760;;;;;;;
+SR3585512;Valentina;Abate;IG/B-2;;Consegnato;;ROG NUC;760;;;;;;;
+SR3586553;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Engage Flex Mini;;IGITMONCD098513;;;;;Canoe 16 SP4 - Idex - Beyond Trust  (Acceso remoto da Diego Zanella e Giuseppe de Crescenzo) - AXIGDYD - WX8DVZM
+SR3586577;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Engage Flex Mini;;IGITMONCD098514;;;;;Canoe 16 SP4 - Idex - Beyond Trust  (Acceso remoto da Diego Zanella e Giuseppe de Crescenzo) - AXIGDYD - WX8DVZM
+SR3586595;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Engage Flex Mini;;IGITMONCD098515;;;;;Canoe 16 SP4 - Idex - Beyond Trust  (Acceso remoto da Diego Zanella e Giuseppe de Crescenzo) - AXIGDYD - WX8DVZM
+SR3586613;Carmelo Claudio;Femia;IG/EE-4;;Consegnato;Jackson;HP;Engage Flex Mini;;IGITMONCD098516;;;;;Canoe 16 SP4 - Idex - Beyond Trust  (Acceso remoto da Diego Zanella e Giuseppe de Crescenzo) - AXIGDYD - WX8DVZM
+SR3591034;Gualtiero;Pizzutto;IG/GT-D;;Consegnato;Jackson;HP;Zbook;01/10/2024;IGITMONCL076838;76838;Doideira838;;;Alias Surface - Photoshop
+SR3550504;Norbert;Jakab;IG/GR-D;;Nuovo assunto;Jackson;HP;Zbook;01/10/2024;IGITMONCL076832;76832;Amigo832;01/05/2025;;ADTF 2.14.2 + toolbox -ADTF 3-Canaluzer 16-CpTool-Idex-CitrixWorkspace-Odis-VectorDriver-Notepad++-EPM-ThinkCell-Matlab R2023b (vedi mail per i tool)-Canoe17-Canape21-Python3.10-VisualStudioCode-ArduinoIDE
+SR3593299;Arne;Heinrichs;IG/F;IGITMONCL077553;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077393;77393;Poderoso393;23/04/2025;;Think Cell
+SR3595063;Federica;Beltramo;IG/G;IGITMONCL077549;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077395;77395;Procedimento546;;;Adobe Writer
+SR3595051;Cinzia;Di Tullo;IG/B-1;IGITMONCL077545;Consegnato;;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077394;77394;Procedimento545;05/05/2025;14:30;Think Cell
+SR3596892;Roberto;Monni;IDD/G;ITDGTOL00071219;Consegnato;;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077398;77398;Ventilador398;;;
+SR3550540;Marco;Pace;IG/ER-2D;ITDGTOL00069814;Consegnato;;HP;Zbook;01/10/2024;IGITMONCL076836;76836;Amigo836;05/05/2025;;Catia - Connect - NX - Icem - Kister - Wondershare - Gimp - JT2GO - Vmware HORIZON
+SR3593236;Luca;Moretti;IG/ER-N;ITDGTOL00065941;Consegnato;Jackson;HP;;;IGITMONCL077324;77324;Deus324;06/05/2025;08:30;Catia 5, Connect, RG Lin Advanced (Citrix Workspace)
+SR3550534;Ernesto;Mariotto;IG/EG-7;;Consegnato;Jackson;HP;Zbook;01/10/2024;IGITMONCL076835;76835;Amigo835;06/05/2025;;Catia - Connect
+SR3593198;LEOPOLDO;Benetollo;IG/EI-34;ITDGTOL00069742;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077318;77318;Deus318;07/05/2025;08:30;Catia-Connect-AudiWorkBench-Kisters-Jt2GO
+SR3593283;Alessandro;Salvi;IG/EG-C;ITDGTOL00069456;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077326;77326;Deus326;07/05/2025;09:00;Catia-Photoshop
+SR3593268;Luigi;Di Frenza;IG/Q-1;ITDGTOL00065945;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077325;77325;Deus325;07/05/2025;14:00;Photoshop - Connect
+SR3594113;Andrea;Belletti;IG/EG-C;ITDGTOL00069313;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077328;77328;Deus328;08/05/2025;08:30;Connect e Catia V5
+SR3596868;Emanuele;Cicco;IG/D-1;;Priorità/Stagisti/Scorta;Jackson;HP;Zbook;;IGITMONCL072473;72473;;05/05/2025;;Rhino-Blender-Keyshot2023-Photoshop-Illustrator-Vred-Fusion360
+SR3593216;Giovanni;Mazzone;IG/ER-7;ITDGTOL00070984;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077321;77321;Deus321;08/05/2025;14:00;Catia, Connect, JT2Go, AVON, Citrix Workspace, LDorado Design Viewer 1.7
+SR3593292;Simone;Piccioni;IG/ER-3;ITDGTOL00068795;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077327;77327;Deus327;08/05/2025;14:00;CAD e Connect/Team center e VDI cliente
+SR3599245;Elena;Negro;IG/E;ITDGTOL00072251;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077399;77399;Gripe399;09/05/2025;08:30;OBS Studio - Adobe WR
+SR3593192;Riccardo;Favole;IG/EI-1;ITDGTOL00069472;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077317;77317;Deus317;12/05/2025;10:30;Catia 5 e Connect, Cavit e Falcon 
+SR3600369;Alessandro;Trombin;IG/D-3;ITDGTOL00070979;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077331;77331;Gripe331;12/05/2025;14:45;Blender 4.2 - Alias - Photoshop - Keyshot
+SR3601973;Leandro;Gasparoni;IG/SD;;Consegnato;;Lenovo;ThinkPad T14 Gen 4;03/05/2024;IGITMONCL073759;73759;Caramba759;;;
+SR3599233;Marco;Luera;IG/ER-N;ITDGTOL00068223;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077329;77329;Gripe329;14/05/2025;10:00;Connect - Kisters - Animator 4 2.6.2 - Turbo VNC - WinSCP - Altair Hyper Works 2021, 2023
+SR3599257;Riccardo;Portelli;IG/D-61;ITDGTOL00069747;Riassegnazione/Extra;Jackson;HP;Zbook;;IGITMONCL072938;72938;Italdesign72938@!;08/04/2025;10:30;Alias Surface, Autodesk Vred, Adobe Illustrator, Adobe Photoshop, Adobe Substance, Adobe Firefly (contattare Antonio Saracco per capire lo status dell’utilizzo di questo software), Logitech Options , Wacom Driver, Blender, Keyshot, Premiere
+SR3601955;Christian;Muriella;IG/EG-Q;ITDGTOL00073654;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077401;77401;Sangueolhos401;14/05/2025;14:00;Alpos - Elsa - KVS - VDS - AVX
+SR3601961;MARCO;Panacciulli;IG/B;IGITMONCL077556;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077402;77402;Sangueolhos402;14/05/2025;;Think-Cell
+SR3599239;Massimiliano;Cicuttin;IG/EG-Q;ITDGTOL00068247;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077330;77330;Gripe330;15/05/2025;11:30;Audi workbench - PDF24 - 
+SR3606154;Silvio;Galliano;IG/ER-2D;ITDGTOL00068806;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077333;77333;Alex333;19/05/2025;14:45;Catia
+SR3600378;Cesare;Ghione;IG/D-62;ITDGTOL00068356;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077332;77332;Gripe332;20/05/2025;09:00;Alias Surface, Keyshot e Photoshop
+SR3601367;Cesare;Graglia;IG/Q-1;IGITMONCL070765;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077334;77334;Gripe334;20/05/2025;08:30;Acrobat writer, Desktop tools (softwere misura ad ultrasuoni, per info se necessario contattare Ellena/Cassieri), Kisters, Catia
+SR3606773;Sebastiano;Trovato;IG/ER-2E;;Riassegnazione/Extra;Jackson;HP;Zbook;01/10/2024;IGITMONCL076827;76827;Procon827;;;Catia V5, Connect, Visual m, jt2go, avon, tevon, vmp - Lightroom
+SR3607497;Barbara;Crivello;IG/Q;ITDGTOL00069414;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077404;77404;Sccm404;21/05/2025;;ARXivar Next Help - File Open - Acrobat Pro - Visio
+SR3599251;Rosanna;Racioppo;IG/F;IGITMONCL076862;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077400;77400;Gripe400;23/05/2025;;
+SR3593204;Simonetta;Bonello;IG/ER-7;ITDGTOL00069746;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077319;77319;Deus319;27/05/2025;08:30;Uso costantemente Citrix e Visio che pur essendo dedicati per un programma su PC virtuale in VW comunque chiede la licenza autoctona, JT2GO
+SR3607491;Emanuela;Franco;IG/F;ITDGTOL00070456;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077403;77403;Sccm403;23/05/2025;;Adobe Pro, Go-Sign, Zoom, Skype, Cisco, Google Meet - Photoshop
+SR3608188;Daniele;Costarella;IG/EE-2;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077406;77406;IDGNapoli406;;;
+SR3608210;Daniele;Costarella;IG/EE-2;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077407;77407;IDGNapoli407;;;
+SR3608234;Daniele;Costarella;IG/EE-2;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077408;77408;IDGNapoli408;;;
+SR3608240;Daniele;Costarella;IG/EE-2;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077409;77409;IDGNapoli409;;;
+SR3608248;Daniele;Costarella;IG/EE-2;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077410;77410;IDGNapoli410;;;
+SR3608254;Daniele;Costarella;IG/EE-2;;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077411;77411;IDGNapoli411;;;
+SR3607503;Maria Teresa;Dalmasso;IG/EE-6;ITDGTOL00068239;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077336;77336;Sccm336;29/05/2025;09:00;CATIA, CONNECT
+SR3563052;Emanuela;Franco;IG/F;IGITMONCL077403;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077561;77561;Ipabinha561;29/05/2025;; Adobe Pro, Go-Sign, Zoom, Skype, Cisco, Google Meet - Photoshop
+SR3611261;Gualtiero;Pizzutto;IG/GT-D;;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077338;77338;Sccm338;27/05/2025;;Alias Surface
+SR3611273;Gualtiero;Pizzutto;IG/GT-D;;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077339;77339;Sccm339;27/05/2025;;Alias Surface
+SR3607509;Vincenzo;Castracane;IG/ER-2B;ITDGTOL00069766;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077337;77337;Sccm337;30/05/2025;;KVS, Catia V5, Connect, Avon e i vari pacchetti Audi
+SR3563772;Azzurra;Italiano;IG/Q;;Nuovo assunto;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077573;77573;Valadares573;03/06/2025;;ARXivar Next Helpr - File Open - Acrobat Pro - Visio
+SR3550510;Riccardo;Musto;IG/EG-1;;Nuovo assunto;Jackson;HP;Zbook;01/10/2024;IGITMONCL076833;76833;Amigo833;03/06/2025;;
+SR3601967;Luca;Artuffo;IG/Q-1;;Nuovo assunto;Jackson;HP;Zbook;18/04/2025;IGITMONCL077367;77367;Sangueolhos367;03/06/2025;;CATIA V5 , Adobe writer , kister visualizzatore 3D
+SR3606160;Luca;Degaetano;IG/EG-C;;Riassegnazione/Extra;Jackson;HP;Zbook;;IGITMONCL076121;76121;Furacao121;03/06/2025;;Catia-Connect-Citrix
+SR3614783;Enrico;Buttignoni;IG/P-63;ITDGTOL00063886;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077342;77342;Monitor342;05/06/2025;09:00;CATIA V5 - CONNECT
+SR3614071;Adele;Andreetto;IG/GT-E;;Priorità/Stagisti/Scorta;Jackson;HP;EliteBook;;IGITMONCL076188;76188;;03/06/2025;;Phyton
+ SR3614065;Akash;Suresh;IG/D-3;;Priorità/Stagisti/Scorta;Jackson;HP;Zbook;;IGITMONCL072277;72277;;03/06/2025;;Surface-Blender-Photoshop
+SR3617489;Giovanni;Cona;IG/P-71;ITDGTOL00065087;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077345;77345;Fone345;09/06/2025;10:30;Catia
+SR3617513;Marco;Fuso;IG/EG-8;ITDGTOL00065131;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077581;77581;Fone581;09/06/2025;15:00;SAP - JT2GO
+SR3608277;Romualdo;Pandolfi;IG/EG-I;ITDGTOL00070685;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077412;77412;IDGNapoli412;11/06/2025;08:30;CP-Tool - Idex - Te.VBV - PowerBi - Think Cell
+SR3614857;Alfredo;Attisani;IG/P-62;ITDGTOL00068443;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077578;77578;Monitor578;11/06/2025;09:00;Idex, NOVOViewer, Kisters, JT2Go, EPM
+SR3621355;Andrea;Raballo;IG/S-31;IGITMONCL077574;Riassegnazione/Extra;Jackson;LENOVO;ThinkPad T14 Gen 4;;IGITMONCL077553;77553;Bugre553;;;
+SR3614835;Carmine; Vitolo;IG/EE-4;ITDGTOL00069644;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077577;77577;Monitor577;13/06/2025;08:30;"Adobe Acrobat Pro,ODIS, Canoe, System42, driver convertitore seriale/usb, driver ADB,iDEX, CP-Tool, WinSCP, python,-	Inserire percorso C:\ADB nelle variabili d’ambiente di sistema, installare beyond trust per poter cambiare l’IP statico del pc"
+SR3617507;Silvio;Lucato;IG/P-62;ITDGTOL00064528;Consegnato;;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077580;77580;Fone580;13/06/2025;09:30;
+SR3621278;Giuseppe;Pecoraro;IDD/EE-5;;Spedizione IDD;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077583;77583;Zoropa583;01/07/2025;;Odis - Canoe - Vector Hardware Configuration - CANalyzer - Wireshark - PyCharm - Putty - EPM
+SR3617519;Fereshteh;Feizabadi Farahani;IG/S-32;;Nuovo assunto;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077582;77582;Fone582;16/06/2025;;
+SR3617495;Francesco;Cona;IG/P-71;ITDGTOL00065737;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077346;77346;Fone346;16/06/2025;14:30;Catia
+SR3622572;Alessia;Antonini;IG/EG-5;;Riassegnazione/Extra;Jackson;HP; EliteBook;;IGITMONCL070716;70716;Networking70716;;;PC FUORI DOMINIO
+SR3614053;GiovannirGiovanni;Schiaffini;IG/EI-1;ITDGTOL00068794;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077341;77341;Ipatinga08524679**$$;17/06/2025;09:30;Ansa 24.1 - Animator 4_v2.71 - Connect - Catia - KeePass - Kisters - Notepad++ - Zoom
+SR3614809;Barbara;Musso;IG/V;ITDGTOL00070451;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077575;77575;Monitor575;18/06/2025;09:00;
+SR3621286;Selena;Vacchetta;IG/F-1;IGITMONCL070620;Consegnato;Mariateresa;Lenovo;ThinkPad T14 Gen 4;16/01/2025;IGITMONCL077584;77584;Zoropa584;18/06/2025;09:00;
+SR3614047;Giuseppe;Bratti;IG/ER-N;ITDGTOL00070951;Consegnato;Jackson;HP;Zbook;18/04/2025;IGITMONCL077340;77340;Ipatinga340*!;18/06/2025;;
+SR3596874;Luca;Bertolino;IG/EG-6;ITDGTOL00069639;Consegnato;Jackson;Lenovo;ThinkPad T14 Gen 4;04/04/2025;IGITMONCL077396;77396;Ventilador396;18/06/2025;13:30;Kisters, Tevon, AVON e Think Cell, VMWare Horizon

@@ -1,0 +1,51 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2">Dettaglio Utente</h1>
+    </div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <strong>{{ utente.nome }} {{ utente.cognome }}</strong>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Dipartimento:</strong> {{ utente.dipartimento.nome|default:"N/A" }}</li>
+                <li class="list-group-item"><strong>Stato:</strong> {% if utente.attivo %}Attivo{% else %}Inattivo{% endif %}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header">Storico Dispositivi Assegnati</div>
+            <div class="card-body">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>Hostname Dispositivo</th>
+                            <th>Data Assegnazione</th>
+                            <th>Data Restituzione</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in storico %}
+                        <tr>
+                            <td><a href="{% url 'dettaglio_dispositivo' pk=a.dispositivo.id %}">{{ a.dispositivo.hostname }}</a></td>
+                            <td>{{ a.data_assegnazione|date:"d/m/Y" }}</td>
+                            <td>{{ a.data_restituzione|date:"d/m/Y"|default:"In uso" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">Nessuno storico di assegnazioni per questo utente.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

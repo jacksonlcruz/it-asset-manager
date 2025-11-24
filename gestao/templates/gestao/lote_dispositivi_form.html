@@ -1,0 +1,43 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+    <h1 class="mb-4">{{ page_title }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text text-muted">
+                Usa questo modulo per creare rapidamente multipli dispositivi dello stesso tipo. 
+                Il sistema genererà automaticamente i hostname basandosi sull'intervallo di cespite e il tipo di PC.
+            </p>
+            <hr>
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}<p class="mb-0">{{ error }}</p>{% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    {% for field in form %}
+                        <div class="col-md-6 mb-3">
+                            {{ field.label_tag }}
+                            {{ field }} {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                            {% endif %}
+
+                            {% for error in field.errors %}
+                                <div class="text-danger mt-1">
+                                    <small>{{ error }}</small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-success">Crea Dispositivi</button>
+                <a href="{% url 'lista_dispositivi' %}" class="btn btn-secondary">Annulla</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Risultati della Ricerca per: <span class="text-primary">"{{ query }}"</span></h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4><i class="bi bi-hdd"></i> Dispositivi Trovati ({{ dispositivi.count }})</h4>
+    </div>
+    {% if dispositivi %}
+    <div class="card-body">
+        <ul class="list-group">
+            {% for d in dispositivi %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="{% url 'dettaglio_dispositivo' pk=d.id %}"><strong>{{ d.hostname }}</strong></a> ({{ d.modello }})
+                        <small class="text-muted d-block">
+                            Stato: {{ d.stato }} | Utente: {{ d.utente_attuale|default:"Nessuno" }}
+                        </small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">{{ d.tipo }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4><i class="bi bi-person"></i> Utenti Trovati ({{ utenti.count }})</h4>
+    </div>
+    {% if utenti %}
+    <div class="card-body">
+        <ul class="list-group">
+            {% for u in utenti %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="{% url 'dettaglio_utente' pk=u.id %}"><strong>{{ u.cognome }}, {{ u.nome }}</strong></a>
+                        <small class="text-muted d-block">Dipartimento: {{ u.dipartimento.nome|default:"N/A" }}</small>
+                    </div>
+                    {% if u.attivo %}
+                        <span class="badge bg-success">Attivo</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Inattivo</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h4><i class="bi bi-tools"></i> Preparazioni Trovate ({{ preparazioni.count }})</h4>
+    </div>
+    {% if preparazioni %}
+    <div class="card-body">
+        <ul class="list-group">
+            {% for p in preparazioni %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="{% url 'dettaglio_preparazione' pk=p.id %}"><strong>Preparazione #{{ p.id }}</strong></a>
+                        <small class="text-muted d-block">
+                            Tipo: {{ p.tipo_richiesta }} | Categoria: {{ p.categoria }}
+                        </small>
+                    </div>
+                    <span class="badge bg-info text-dark">{{ p.stato_preparazione }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2">Dettaglio Dispositivo</h1>
+    <div>
+        <a href="{% url 'modifica_dispositivo' pk=dispositivo.id %}" class="btn btn-warning"><i class="bi bi-pencil"></i> Modifica</a>
+        {% if dispositivo.stato != 'Assegnato' %}
+        <a href="{% url 'cancella_dispositivo' pk=dispositivo.id %}" class="btn btn-danger"><i class="bi bi-trash"></i> Cancella</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <strong>{{ dispositivo.hostname }}</strong>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Marca:</strong> {{ dispositivo.marca }}</li>
+                <li class="list-group-item"><strong>Modello:</strong> {{ dispositivo.modello }}</li>
+                <li class="list-group-item"><strong>Tipo:</strong> {{ dispositivo.tipo }}</li>
+                <li class="list-group-item"><strong>Stato:</strong> {{ dispositivo.stato }}</li>
+                <li class="list-group-item"><strong>Cespite:</strong> {{ dispositivo.cespite|default:"N/A" }}</li>
+                <li class="list-group-item"><strong>S/N:</strong> {{ dispositivo.numero_serie|default:"N/A" }}</li>
+                <li class="list-group-item"><strong>Data Acquisto:</strong> {{ dispositivo.data_acquisto|date:"d/m/Y"|default:"N/A" }}</li>
+                <li class="list-group-item"><strong>Locazione:</strong> {{ dispositivo.locazione_magazzino|default:"N/A" }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-7 mb-4">
+        <div class="card">
+            <div class="card-header">Storico Assegnazioni</div>
+            <div class="card-body">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>Utente</th>
+                            <th>Data Assegnazione</th>
+                            <th>Data Restituzione</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in storico %}
+                        <tr>
+                            <td>{{ a.utente }}</td>
+                            <td>{{ a.data_assegnazione|date:"d/m/Y" }}</td>
+                            <td>{{ a.data_restituzione|date:"d/m/Y"|default:"In uso" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">Nessuno storico di assegnazioni per questo dispositivo.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

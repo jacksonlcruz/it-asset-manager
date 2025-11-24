@@ -1,0 +1,25 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card text-center border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h3>Conferma Cancellazione</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead">Sei sicuro di voler cancellare permanentemente la seguente preparazione?</p>
+                        <h4><strong>#{{ preparazione.id }}: {{ preparazione }}</strong></h4>
+                        <hr>
+                        <form method="post">
+                            {% csrf_token %}
+                            <a href="{% url 'dettaglio_preparazione' pk=preparazione.pk %}" class="btn btn-secondary">Annulla</a>
+                            <button type="submit" class="btn btn-danger">Sì, Cancella Permanentemente</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

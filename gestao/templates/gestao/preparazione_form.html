@@ -1,0 +1,112 @@
+{% extends 'gestao/base.html' %}
+
+{% block content %}
+    <h1 class="mb-4">Crea Nuova Preparazione</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    {% for field in form %}
+                        <div class="col-md-6 mb-3" id="div_id_{{ field.name }}">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger p-1 mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-success">Salva Preparazione</button>
+                <a href="{% url 'lista_preparazioni' %}" class="btn btn-secondary">Annulla</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- Seleciona todos os elementos do formulário que vamos manipular ---
+        const tipoRichiestaSelect = document.querySelector('#id_tipo_richiesta');
+        const utenteSelect = document.querySelector('#id_utente');
+        const dispositivoVecchioSelect = document.querySelector('#id_dispositivo_vecchio');
+        const tipologiaPCSelect = document.querySelector('#id_tipologia_pc_richiesta');
+        const dispositivoNuovoSelect = document.querySelector('#id_dispositivo_nuovo');
+        
+        // --- Define os grupos de campos que serão escondidos ou mostrados ---
+        const campiNuovaAssunzione = [
+            document.querySelector('#div_id_nome_nuovo_utente'),
+            document.querySelector('#div_id_cognome_nuovo_utente'),
+            document.querySelector('#div_id_data_ingresso'),
+            document.querySelector('#div_id_dipartimento_nuovo_utente'),
+            document.querySelector('#div_id_tipo_contratto_nuovo_utente')
+        ];
+
+        const campiSostituzione = [
+            document.querySelector('#div_id_utente'),
+            document.querySelector('#div_id_dispositivo_vecchio'),
+            document.querySelector('#div_id_motivo_sostituzione')
+        ];
+        
+        // Lógica para mostrar/esconder os campos
+        function toggleCampi() {
+            const tipoSelezionato = tipoRichiestaSelect.value;
+            
+            campiNuovaAssunzione.forEach(div => { if(div) div.style.display = (tipoSelezionato === 'Nuova Assunzione') ? 'block' : 'none'; });
+            campiSostituzione.forEach(div => { if(div) div.style.display = (tipoSelezionato === 'Sostituzione') ? 'block' : 'none'; });
+        }
+
+        // Lógica para atualizar o dropdown de Dispositivo ANTIGO
+        async function aggiornaDispositiviVecchi() {
+            const utenteId = utenteSelect.value;
+            dispositivoVecchioSelect.innerHTML = '<option value="">---------</option>';
+            if (!utenteId) return;
+
+            const response = await fetch(`/api/get-dispositivi-utente/?utente_id=${utenteId}`);
+            const dispositivi = await response.json();
+
+            dispositivi.forEach(dispositivo => {
+                const option = document.createElement('option');
+                option.value = dispositivo.id;
+                option.textContent = dispositivo.hostname;
+                dispositivoVecchioSelect.appendChild(option);
+            });
+        }
+
+        // Lógica para atualizar o dropdown de Dispositivo NOVO
+        async function aggiornaDispositiviNuovi() {
+            const tipologia = tipologiaPCSelect.value;
+            dispositivoNuovoSelect.innerHTML = '<option value="">---------</option>';
+            if (!tipologia) return;
+
+            const response = await fetch(`/api/get-dispositivi-per-tipo/?tipologia=${tipologia}`);
+            const dispositivi = await response.json();
+
+            dispositivi.forEach(dispositivo => {
+                const option = document.createElement('option');
+                option.value = dispositivo.id;
+                option.textContent = dispositivo.hostname;
+                dispositivoNuovoSelect.appendChild(option);
+            });
+        }
+
+        // --- Adiciona os 'escutadores' de eventos ---
+        tipoRichiestaSelect.addEventListener('change', toggleCampi);
+        utenteSelect.addEventListener('change', aggiornaDispositiviVecchi);
+        tipologiaPCSelect.addEventListener('change', aggiornaDispositiviNuovi);
+        
+        // Executa a função uma vez no início para garantir o estado correto da página
+        toggleCampi();
+    });
+</script>
+{% endblock %}
