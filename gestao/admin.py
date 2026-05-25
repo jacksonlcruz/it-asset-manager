@@ -1,9 +1,9 @@
-# gestao/admin.py - VERSÃO MELHORADA
+# gestao/admin.py - VERSIONE MIGLIORATA
 
 from django.contrib import admin
 from .models import Dipartimento, Utente, Dispositivo, Assegnazione, Preparazione, Sede
 
-# Customização para o modelo Dispositivo
+# Personalizzazione per il modello Dispositivo
 @admin.register(Dispositivo)
 class DispositivoAdmin(admin.ModelAdmin):
     list_display = ('hostname', 'tipo', 'stato', 'utente_attuale', 'locazione_magazzino')
@@ -11,7 +11,7 @@ class DispositivoAdmin(admin.ModelAdmin):
     search_fields = ('hostname', 'cespite', 'numero_serie', 'modello')
     ordering = ('hostname',)
 
-# Customização para o modelo Utente
+# Personalizzazione per il modello Utente
 @admin.register(Utente)
 class UtenteAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'dipartimento', 'attivo')
@@ -19,7 +19,7 @@ class UtenteAdmin(admin.ModelAdmin):
     search_fields = ('nome', 'cognome')
     ordering = ('cognome', 'nome')
 
-# Customização para o modelo Preparazione
+# Personalizzazione per il modello Preparazione
 @admin.register(Preparazione)
 class PreparazioneAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'tipo_richiesta', 'categoria', 'stato_preparazione', 'data_pianificazione')
@@ -27,7 +27,7 @@ class PreparazioneAdmin(admin.ModelAdmin):
     search_fields = ('nome_nuovo_utente', 'cognome_nuovo_utente', 'utente__nome', 'utente__cognome')
     ordering = ('-id',)
 
-# Customização para o modelo Assegnazione
+# Personalizzazione per il modello Assegnazione
 @admin.register(Assegnazione)
 class AssegnazioneAdmin(admin.ModelAdmin):
     list_display = ('dispositivo', 'utente', 'data_assegnazione', 'data_restituzione')
@@ -36,6 +36,6 @@ class AssegnazioneAdmin(admin.ModelAdmin):
     ordering = ('-data_assegnazione',)
 
 
-# Registra o modelo Dipartimento de forma simples
+# Registra i modelli Dipartimento e Sede in modo semplice
 admin.site.register(Dipartimento)
 admin.site.register(Sede)

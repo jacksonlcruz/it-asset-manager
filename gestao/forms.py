@@ -1,10 +1,10 @@
 # gestao/forms.py
 from django import forms
-from .models import Preparazione, Dispositivo, Dipartimento # Importamos o Dispositivo
+from .models import Preparazione, Dispositivo, Dipartimento # Importiamo il Dispositivo
 from datetime import date
 
 class PreparazioneForm(forms.ModelForm):
-    # Transforma o campo de texto em um menu dropdown que busca na tabela Dipartimento
+    # Trasforma il campo di testo in un menu a tendina che recupera dati dalla tabella Dipartimento
     dipartimento_nuovo_utente = forms.ModelChoiceField(
         queryset=Dipartimento.objects.none(),
         required=False,
@@ -14,24 +14,24 @@ class PreparazioneForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['dipartimento_nuovo_utente'].queryset = Dipartimento.objects.all().order_by('nome')
-        # Filtra o campo para mostrar apenas dispositivos com status 'Disponibile'
+        # Filtra il campo per mostrare solo i dispositivi con stato 'Disponibile'
         self.fields['dispositivo_nuovo'].queryset = Dispositivo.objects.filter(stato='Disponibile').order_by('hostname')
-        # Também podemos limitar o campo do dispositivo antigo para mostrar apenas os atribuídos
+        # Limita anche il campo del vecchio dispositivo per mostrare solo quelli assegnati
         self.fields['dispositivo_vecchio'].queryset = Dispositivo.objects.filter(stato='Assegnato').order_by('hostname')
 
 
     class Meta:
         model = Preparazione
-        # Lista de campos ATUALIZADA
+        # Lista di campi aggiornata
         fields = [
-            'tipo_richiesta', 'categoria', 'luogo_intervento', # <-- Adicionamos o novo campo
+            'tipo_richiesta', 'categoria', 'luogo_intervento', # <-- Nuovo campo aggiunto
             'nome_nuovo_utente', 'cognome_nuovo_utente', 'data_ingresso', 'dipartimento_nuovo_utente', 'tipo_contratto_nuovo_utente',
             'utente', 'dispositivo_vecchio', 
             'motivo_sostituzione',
             'dispositivo_nuovo',
             'ticket_helpdesk', 'tipologia_pc_richiesta', 'note_software', 'data_pianificazione'
         ]
-        # O campo manual foi removido da lista 'fields'
+        # Il campo manuale è stato rimosso dalla lista 'fields'
 
         widgets = {
             'data_ingresso': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
@@ -41,7 +41,7 @@ class PreparazioneForm(forms.ModelForm):
             'tipo_contratto_nuovo_utente': forms.Select(attrs={'class': 'form-select'}),
             'utente': forms.Select(attrs={'class': 'form-select'}),
             'dispositivo_vecchio': forms.Select(attrs={'class': 'form-select'}),
-            'dispositivo_nuovo': forms.Select(attrs={'class': 'form-select'}), # Widget para o novo campo
+            'dispositivo_nuovo': forms.Select(attrs={'class': 'form-select'}), # Widget per il nuovo campo
             'motivo_sostituzione': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
             'luogo_intervento': forms.Select(attrs={'class': 'form-select'}),
             'note_software': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
@@ -55,7 +55,7 @@ class PreparazioneForm(forms.ModelForm):
             'dipartimento_nuovo_utente': 'Dipartimento (Nuovo Utente)',
             'utente': 'Utente Esistente (per Sostituzione)',
             'dispositivo_vecchio': 'Dispositivo da Sostituire',
-            'dispositivo_nuovo': 'Nuovo Dispositivo (dal Magazzino)', # Label para o novo campo
+            'dispositivo_nuovo': 'Nuovo Dispositivo (dal Magazzino)', # Label per il nuovo campo
             'motivo_sostituzione': 'Motivo della Sostituzione',
             'ticket_helpdesk': 'Ticket Help Desk',
             'tipologia_pc_richiesta': 'Tipologia PC Richiesta',
@@ -68,10 +68,10 @@ class PreparazioneForm(forms.ModelForm):
 class DispositivoForm(forms.ModelForm):
     class Meta:
         model = Dispositivo
-        # Definimos os campos que queremos no formulário
+        # Definisce i campi del formulario
         fields = ['hostname', 'cespite', 'numero_serie', 'marca', 'modello', 'tipo', 'stato', 'data_acquisto', 'note']
 
-        # Adicionamos widgets para que fiquem bonitos com Bootstrap
+        # Aggiunge i widget Bootstrap
         widgets = {
             'hostname': forms.TextInput(attrs={'class': 'form-control'}),
             'cespite': forms.TextInput(attrs={'class': 'form-control'}),
@@ -84,33 +84,33 @@ class DispositivoForm(forms.ModelForm):
             'note': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
         }
 
-    # Função especial para tornar alguns campos não obrigatórios
+    # Metodo speciale per rendere alcuni campi non obbligatori
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Tornar campos não-obrigatórios
+        # Campi non obbligatori
         self.fields['cespite'].required = False
         self.fields['numero_serie'].required = False
         self.fields['data_acquisto'].required = False
         self.fields['note'].required = False
 
-        # --- NOSSA NOVA LÓGICA ---
-        # Se estamos criando um novo dispositivo (não editando um existente)
+        # --- NUOVA LOGICA ---
+        # Se stiamo creando un nuovo dispositivo (non modificando uno esistente)
         if not self.instance.pk:
-            # Define o valor inicial do campo 'stato' para 'Disponibile'
+            # Imposta il valore iniziale del campo 'stato' su 'Disponibile'
             self.fields['stato'].initial = 'Disponibile'
-            # Desabilita o campo para que não seja editável na tela de criação
+            # Disabilita il campo in modo che non sia modificabile nella schermata di creazione
             self.fields['stato'].disabled = True
 
 
-class LoteDispositiviForm(forms.Form):
+class LottoDispositiviForm(forms.Form):
     TIPO_PC_CHOICES = [('Notebook', 'Notebook'), ('PC Fisso', 'PC Fisso')]
 
-    # O campo 'tipo' no modelo Dispositivo é para Office/CAD. Este é para o hardware.
-    # Mantive os nomes diferentes para clareza: tipo_pc vs tipo_dettaglio
-    tipo_pc = forms.ChoiceField(choices=TIPO_PC_CHOICES, label="Tipo de PC (para gerar Hostname)", widget=forms.Select(attrs={'class': 'form-select'}))
+    # Il campo 'tipo' nel modello Dispositivo è per Office/CAD. Questo è per l'hardware.
+    # I nomi sono distinti per chiarezza: tipo_pc vs tipo_dettaglio
+    tipo_pc = forms.ChoiceField(choices=TIPO_PC_CHOICES, label="Tipo di PC (per generare Hostname)", widget=forms.Select(attrs={'class': 'form-select'}))
 
-    # Usamos as escolhas que já definimos no modelo Dispositivo
-    tipo_dettaglio = forms.ChoiceField(choices=Dispositivo.TIPO_CHOICES, label="Tipologia (Office/CAD, etc)", widget=forms.Select(attrs={'class': 'form-select'}))
+    # Usa le scelte già definite nel modello Dispositivo
+    tipo_dettaglio = forms.ChoiceField(choices=Dispositivo.TIPO_CHOICES, label="Tipologia (Office/CAD, ecc)", widget=forms.Select(attrs={'class': 'form-select'}))
 
     marca = forms.CharField(max_length=100, label="Marca", widget=forms.TextInput(attrs={'class': 'form-control'}))
     modello = forms.CharField(max_length=100, label="Modello", widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -119,7 +119,7 @@ class LoteDispositiviForm(forms.Form):
     data_acquisto = forms.DateField(label="Data di Acquisto", required=False, widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
 
 
-#Classe de devolucao de PC
+#Classe per la restituzione del PC
 class RestituzioneForm(forms.Form):
     dispositivo = forms.ModelChoiceField(
         queryset=Dispositivo.objects.none(),
@@ -132,9 +132,9 @@ class RestituzioneForm(forms.Form):
         initial=date.today
     )
     locazione_magazzino = forms.CharField(
-        label="Locazione in Magazzino (opzionale)", # <-- Mudamos o texto do label
+        label="Locazione in Magazzino (opzionale)",
         help_text="Es. Scaffale A-03",
-        required=False, # <-- ESTA É A MUDANÇA PRINCIPAL
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     note = forms.CharField(

@@ -1,35 +1,35 @@
-# gestao/views.py - VERSÃO CORRIGIDA E COMPLETA
+# gestao/views.py - VERSIONE CORRETTA E COMPLETA
 from django.shortcuts import render, redirect, get_object_or_404 #
 from django.db.models import Count, Q, OuterRef, Subquery
 from .models import Dispositivo, Utente, Assegnazione, Preparazione, Dipartimento
 from django.http import JsonResponse
 from django.contrib import messages
 from datetime import date, timedelta
-from .forms import PreparazioneForm, DispositivoForm, LoteDispositiviForm, RestituzioneForm
+from .forms import PreparazioneForm, DispositivoForm, LottoDispositiviForm, RestituzioneForm
 from django.db.models.functions import TruncMonth
 from dateutil.relativedelta import relativedelta
 
 def dashboard(request):
 
-    # --- LÓGICA ATUALIZADA PARA CONTAR APENAS PCS NOVOS ---
+    # --- LOGICA AGGIORNATA PER CONTARE SOLO I PC NUOVI ---
     disponibili_novi = Dispositivo.objects.filter(
     stato='Disponibile', 
-    assegnazione__isnull=True # A mágica: só conta se NUNCA teve uma 'Assegnazione'
+    assegnazione__isnull=True # Conta solo i dispositivi che non hanno MAI avuto un'assegnazione
     )
 
     disponibili_office = disponibili_novi.filter(tipo='Office').count()
     disponibili_cad = disponibili_novi.filter(tipo='CAD').count()
     total_disponibili = disponibili_novi.count()
     
-    # 1. NÚMEROS DE PCS DISPONÍVEIS, SEPARANDO CAD E OFFICE
+    # 1. NUMERO DI PC DISPONIBILI, SEPARANDO CAD E OFFICE
     #disponibili_office = Dispositivo.objects.filter(stato='Disponibile', tipo='Office').count()
     #disponibili_cad = Dispositivo.objects.filter(stato='Disponibile', tipo='CAD').count()
     #total_disponibili = disponibili_office + disponibili_cad
 
-    # 2. QUANTIDADE DE PREPARAÇÕES EM ANDAMENTO
+    # 2. NUMERO DI PREPARAZIONI IN CORSO
     preparazioni_in_corso = Preparazione.objects.exclude(stato_preparazione='Completato').count()
 
-    # 3. PC PIÙ VECCHI IN USO (Lógica mantida)
+    # 3. PC PIÙ VECCHI IN USO
     pcs_piu_vecchi = Dispositivo.objects.filter(stato='Assegnato').order_by('data_acquisto')[:20]
 
     # 4. PROSSIME PREPARAZIONI GIÀ AGENDATE
@@ -40,7 +40,7 @@ def dashboard(request):
         stato_preparazione='Completato'
     ).order_by('data_pianificazione')[:20]
 
-    # Agrupando tudo no "contexto" para enviar para a página
+    # Raccoglie tutto nel "contesto" da inviare alla pagina
     context = {
         'disponibili_office': disponibili_office,
         'disponibili_cad': disponibili_cad,
@@ -54,7 +54,7 @@ def dashboard(request):
     return render(request, 'gestao/dashboard.html', context)
 
 def lista_dispositivi(request):
-    # --- Lógica para deletar em lote ---
+    # --- Logica per l'eliminazione multipla ---
     if request.method == 'POST' and 'delete_selected' in request.POST:
         device_ids = request.POST.getlist('device_ids')
         dispositivi_da_cancellare = Dispositivo.objects.filter(id__in=device_ids).exclude(stato='Assegnato')
@@ -63,31 +63,31 @@ def lista_dispositivi(request):
         messages.success(request, f'{count} dispositivi cancellati con successo.')
         return redirect('lista_dispositivi')
 
-    # --- Lógica para mostrar a lista (GET request) ---
+    # --- Logica per mostrare la lista (richiesta GET) ---
 
-    # Lógica de Ordenação
+    # Logica di Ordinamento
     sort_by = request.GET.get('sort', 'hostname')
     allowed_sort_fields = ['hostname', 'tipo', 'stato', 'locazione_magazzino', 'utente_cognome',
                            '-hostname', '-tipo', '-stato', '-locazione_magazzino', '-utente_cognome']
     if sort_by not in allowed_sort_fields:
         sort_by = 'hostname'
 
-    # --- NOVA LÓGICA PARA ORDENAR POR USUÁRIO ---
-    # Cria uma subquery para buscar o sobrenome do usuário da atribuição ativa
+    # --- NUOVA LOGICA PER ORDINARE PER UTENTE ---
+    # Crea una subquery per recuperare il cognome dell'utente dall'assegnazione attiva
     utente_subquery = Assegnazione.objects.filter(
         dispositivo=OuterRef('pk'), 
         data_restituzione__isnull=True
     ).values('utente__cognome')[:1]
 
-    # Anota cada dispositivo com o sobrenome do seu usuário atual
+    # Annota ogni dispositivo con il cognome dell'utente attuale
     dispositivi_list = Dispositivo.objects.annotate(
         utente_cognome=Subquery(utente_subquery)
     )
 
-    # Aplica a ordenação
+    # Applica l'ordinamento
     dispositivi_list = dispositivi_list.order_by(sort_by)
 
-    # Lógica de Filtro (continua a mesma)
+    # Logica di Filtro
     query = request.GET.get('q')
     stato_filter = request.GET.get('stato')
     if query: 
@@ -112,7 +112,7 @@ def lista_preparazioni(request):
 
 # View que usa o formulário
 def crea_preparazione(request):
-    # O import é feito AQUI DENTRO para quebrar o ciclo
+    # L'import è fatto QUI DENTRO per evitare l'importazione circolare
     from .forms import PreparazioneForm
 
     if request.method == 'POST':
@@ -131,32 +131,32 @@ from datetime import date, timedelta
 
 
 def get_dispositivi_utente(request):
-    # Pega o ID do usuário que foi enviado pela URL (ex: ?utente_id=1)
+    # Recupera l'ID utente inviato tramite URL (es: ?utente_id=1)
     utente_id = request.GET.get('utente_id')
 
-    # Filtra os dispositivos que estão 'Assegnato' para o utente_id recebido.
-    # A busca 'assegnazione__utente_id' navega através do relacionamento reverso.
+    # Filtra i dispositivi con stato 'Assegnato' per l'utente_id ricevuto.
+    # La ricerca 'assegnazione__utente_id' naviga attraverso la relazione inversa.
     dispositivi = Dispositivo.objects.filter(
         stato='Assegnato', 
         assegnazione__utente_id=utente_id,
-        assegnazione__data_restituzione__isnull=True # Garante que são atribuições ativas
-    ).values('id', 'hostname') # Pega apenas os campos que precisamos
+        assegnazione__data_restituzione__isnull=True # Recupera solo le assegnazioni attive
+    ).values('id', 'hostname') # Recupera solo i campi necessari
 
-    # Retorna os dados como uma lista JSON
+    # Restituisce i dati come lista JSON
     return JsonResponse(list(dispositivi), safe=False)
 
 
 def get_dispositivi_per_tipo(request):
-    # Pega a tipologia enviada pela URL (ex: ?tipologia=Office)
+    # Recupera la tipologia inviata tramite URL (es: ?tipologia=Office)
     tipologia = request.GET.get('tipologia')
 
-    # Filtra os dispositivos que estão 'Disponibile' E são da tipologia recebida
+    # Filtra i dispositivi con stato 'Disponibile' E della tipologia ricevuta
     dispositivi = Dispositivo.objects.filter(
         stato='Disponibile', 
         tipo=tipologia
     ).values('id', 'hostname')
 
-    # Retorna os dados como uma lista JSON
+    # Restituisce i dati come lista JSON
     return JsonResponse(list(dispositivi), safe=False)
 
 
@@ -169,22 +169,22 @@ def dettaglio_preparazione(request, pk):
             else:
                 preparazione.tecnico_responsabile = request.user
                 utente_finale = None
-                # --- Lógica para Nuova Assunzione ATUALIZADA ---
+                # --- Logica per Nuova Assunzione ---
                 if preparazione.tipo_richiesta == 'Nuova Assunzione':
-                    # 1. Encontra ou cria o objeto Dipartimento
+                    # 1. Trova o crea l'oggetto Dipartimento
                     dipartimento_obj = None
                     if preparazione.dipartimento_nuovo_utente:
                         dipartimento_obj, _ = Dipartimento.objects.get_or_create(
                             nome=preparazione.dipartimento_nuovo_utente.strip()
                         )
-                    # 2. Cria o novo usuário, ligando-o ao objeto Dipartimento
+                    # 2. Crea il nuovo utente, collegandolo all'oggetto Dipartimento
                     utente_finale = Utente.objects.create(
                         nome=preparazione.nome_nuovo_utente,
                         cognome=preparazione.cognome_nuovo_utente,
-                        dipartimento=dipartimento_obj,# Passa o objeto, não o texto
+                        dipartimento=dipartimento_obj, # Passa l'oggetto, non il testo
                         tipo_contratto=preparazione.tipo_contratto_nuovo_utente
                     )
-                # --- Lógica para Sostituzione (sem alteração na atribuição) ---
+                # --- Logica per Sostituzione ---
                 else:
                     utente_finale = preparazione.utente
                     if preparazione.dispositivo_vecchio:
@@ -193,20 +193,20 @@ def dettaglio_preparazione(request, pk):
                             old_assegnazione.data_restituzione = date.today()
                             old_assegnazione.save()
 
-                # 3. Cria a atribuição final
+                # 3. Crea l'assegnazione finale
                 if utente_finale:
                     assegnazione = Assegnazione.objects.create(
                         dispositivo=preparazione.dispositivo_nuovo,
                         utente=utente_finale,
                         data_assegnazione=date.today()
                     )
-                    preparazione.assegnazione = assegnazione # Linka com a atribuição criada
+                    preparazione.assegnazione = assegnazione # Collega con l'assegnazione creata
 
                 preparazione.stato_preparazione = 'Completato'
                 preparazione.save()
                 messages.success(request, 'Preparazione finalizzata con successo!')
 
-        else: # Lógica para salvar o Checklist (sem alteração)
+        else: # Logica per salvare la Checklist
             preparazione.mail_inviata = 'mail_inviata' in request.POST
             preparazione.dati_in_scsm = 'dati_in_scsm' in request.POST
             preparazione.in_ars = 'in_ars' in request.POST
@@ -221,7 +221,7 @@ def dettaglio_preparazione(request, pk):
 
 
 def modifica_preparazione(request, pk):
-    # A linha de import é adicionada AQUI DENTRO para que a função conheça o formulário
+    # L'import è aggiunto QUI DENTRO per accedere al formulario
     from .forms import PreparazioneForm 
 
     preparazione = get_object_or_404(Preparazione, pk=pk)
@@ -248,9 +248,9 @@ def cancella_preparazione(request, pk):
     if request.method == 'POST':
         preparazione.delete()
         messages.success(request, f'Preparazione #{pk} cancellata con successo.')
-        return redirect('lista_preparazioni') # Redireciona para a lista principal
+        return redirect('lista_preparazioni') # Reindirizza alla lista principale
 
-    # Se for o primeiro acesso, apenas mostra a página de confirmação
+    # Se è il primo accesso, mostra solo la pagina di conferma
     context = {
         'preparazione': preparazione,
         'page_title': f'Conferma Cancellazione Preparazione #{pk}'
@@ -258,7 +258,7 @@ def cancella_preparazione(request, pk):
     return render(request, 'gestao/preparazione_confirm_delete.html', context)
 
 
-def cria_dispositivo_singolo(request):
+def crea_dispositivo_singolo(request):
     if request.method == 'POST':
         form = DispositivoForm(request.POST)
         if form.is_valid():
@@ -275,9 +275,9 @@ def cria_dispositivo_singolo(request):
     return render(request, 'gestao/dispositivo_form.html', context)
 
 
-def cria_lote_dispositivi(request):
+def crea_lotto_dispositivi(request):
     if request.method == 'POST':
-        form = LoteDispositiviForm(request.POST)
+        form = LottoDispositiviForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             marca = data['marca']
@@ -325,7 +325,7 @@ def cria_lote_dispositivi(request):
     
     # O 'else' deve estar alinhado com o 'if request.method == 'POST''
     else:
-        form = LoteDispositiviForm()
+        form = LottoDispositiviForm()
 
     # AS LINHAS ABAIXO ESTAVAM FALTANDO
     context = {
@@ -336,36 +336,33 @@ def cria_lote_dispositivi(request):
 
 
 def modifica_dispositivo(request, pk):
-    # Busca o dispositivo pelo seu ID (pk), ou retorna um erro 404 se não encontrar
+    # Recupera il dispositivo tramite ID (pk), o restituisce 404 se non trovato
     dispositivo = get_object_or_404(Dispositivo, pk=pk)
 
     if request.method == 'POST':
-        # Passamos 'instance=dispositivo' para que o Django saiba que estamos
-        # editando um objeto existente, e não criando um novo.
+        # Si passa 'instance=dispositivo' affinché Django sappia che stiamo
+        # modificando un oggetto esistente, e non creandone uno nuovo.
         form = DispositivoForm(request.POST, instance=dispositivo)
         if form.is_valid():
             form.save()
             messages.success(request, f"Dispositivo '{dispositivo.hostname}' aggiornato con successo.")
-            return redirect('lista_dispositivi') # Redireciona de volta para a lista
+            return redirect('lista_dispositivi') # Reindirizza alla lista
     else:
-        # Se for o primeiro acesso (GET), pré-preenche o formulário com os dados do dispositivo
+        # Se è il primo accesso (GET), precompila il modulo con i dati del dispositivo
         form = DispositivoForm(instance=dispositivo)
 
     context = {
         'form': form,
         'page_title': f"Modifica Dispositivo: {dispositivo.hostname}"
     }
-    # Reutilizamos o mesmo template do formulário de criação!
+    # Riutilizziamo lo stesso template del modulo di creazione!
     return render(request, 'gestao/dispositivo_form.html', context)
-
-# gestao/views.py
-# ... (imports e outras views) ...
 
 
 def cancella_dispositivo(request, pk):
     dispositivo = get_object_or_404(Dispositivo, pk=pk)
 
-    # Regra de segurança: não permitir deletar um PC que está atribuído
+    # Regola di sicurezza: non permettere di cancellare un PC assegnato a un utente
     if dispositivo.stato == 'Assegnato':
         messages.error(request, f"Impossibile cancellare un dispositivo che è attualmente assegnato a un utente.")
         return redirect('lista_dispositivi')
@@ -399,20 +396,20 @@ def restituzione_pc(request):
             ).first()
 
             if assegnazione_attiva:
-                # 1. Encerra a atribuição antiga
+                # 1. Chiude la vecchia assegnazione
                 assegnazione_attiva.data_restituzione = data_restituzione
                 assegnazione_attiva.save()
 
-                # --- LÓGICA ATUALIZADA E EXPLÍCITA ---
-                # 2. Define o status do dispositivo como 'In Bonifica'
+                # --- LOGICA AGGIORNATA ED ESPLICITA ---
+                # 2. Imposta lo stato del dispositivo come 'In Bonifica'
                 dispositivo.stato = 'In Bonifica'
                 
-                # 3. Atualiza os outros campos do dispositivo
+                # 3. Aggiorna gli altri campi del dispositivo
                 dispositivo.locazione_magazzino = locazione
                 if note_restituzione:
                     dispositivo.note = f"Restituito il {data_restituzione.strftime('%d/%m/%Y')}: {note_restituzione}\n---\n{dispositivo.note or ''}"
                 
-                # 4. Salva todas as mudanças no dispositivo de uma só vez
+                # 4. Salva tutte le modifiche sul dispositivo in una sola operazione
                 dispositivo.save()
 
                 messages.success(request, f"Dispositivo '{dispositivo.hostname}' restituito con successo e ora è 'In Bonifica'.")
@@ -431,10 +428,10 @@ def restituzione_pc(request):
 
 
 def disponibili_per_tipo_chart_data(request):
-    # Agrupa os dispositivos com stato='Disponibile' por 'tipo' e conta quantos existem em cada grupo
+    # Raggruppa i dispositivi con stato='Disponibile' per 'tipo' e conta quanti esistono per gruppo
     data = Dispositivo.objects.filter(stato='Disponibile').values('tipo').annotate(total=Count('tipo')).order_by('tipo')
 
-    # Prepara os dados para o formato que o Chart.js espera
+    # Prepara i dati nel formato atteso da Chart.js
     labels = [item['tipo'] for item in data]
     chart_data = [item['total'] for item in data]
 
@@ -446,39 +443,39 @@ def disponibili_per_tipo_chart_data(request):
 
 
 def report_page(request):
-    # --- Lógica para os gráficos anuais ---
+    # --- Logica per i grafici annuali ---
     current_year = date.today().year
-    # Pega o ano atual e os dois anteriores
+    # Recupera l'anno corrente e i due precedenti
     years = [current_year, current_year - 1, current_year - 2]
 
     annual_data = {}
-    # As categorias que queremos em cada gráfico
+    # Le categorie da mostrare in ogni grafico
     labels = ['Nuovi Funzionari', 'Stagisti/Interinali', 'Sostituzioni/Extra']
 
     for year in years:
-        # Filtra as preparações finalizadas para o ano específico
+        # Filtra le preparazioni completate per l'anno specifico
         preparazioni_anno = Preparazione.objects.filter(
             data_pianificazione__year=year,
             stato_preparazione='Completato'
         )
-        # Faz as contagens para cada categoria dentro daquele ano
-        novos_funcionarios = preparazioni_anno.filter(tipo_richiesta='Nuova Assunzione', categoria='Standard').count()
-        novos_stagisti = preparazioni_anno.filter(tipo_richiesta='Nuova Assunzione', categoria__in=['Stagista', 'Interinale']).count()
-        trocas_reassegnazioni = preparazioni_anno.filter(Q(tipo_richiesta='Sostituzione') | Q(categoria__in=['Riassegnazione', 'Extra'])).count()
+        # Esegue i conteggi per ogni categoria all'interno di quell'anno
+        nuovi_funzionari = preparazioni_anno.filter(tipo_richiesta='Nuova Assunzione', categoria='Standard').count()
+        nuovi_stagisti = preparazioni_anno.filter(tipo_richiesta='Nuova Assunzione', categoria__in=['Stagista', 'Interinale']).count()
+        sostituzioni_riassegnazioni = preparazioni_anno.filter(Q(tipo_richiesta='Sostituzione') | Q(categoria__in=['Riassegnazione', 'Extra'])).count()
 
-        # Guarda os dados para aquele ano
+        # Salva i dati per quell'anno
         annual_data[year] = {
             'labels': labels,
-            'data': [novos_funcionarios, novos_stagisti, trocas_reassegnazioni]
+            'data': [nuovi_funzionari, nuovi_stagisti, sostituzioni_riassegnazioni]
         }
 
-    # --- Lógica para a tabela de descarte (continua a mesma) ---
+    # --- Logica per la tabella di rottamazione ---
     dispositivi_rottamati = Dispositivo.objects.filter(stato='Rottamato')
 
     context = {
         'page_title': 'Report e Statistiche',
         'dispositivi_rottamati': dispositivi_rottamati,
-        'annual_data': annual_data # Passa o dicionário Python diretamente
+        'annual_data': annual_data # Passa il dizionario Python direttamente
     }
     return render(request, 'gestao/report_page.html', context)
 
@@ -493,7 +490,7 @@ def dispositivi_per_marca_data(request):
 def dettaglio_dispositivo(request, pk):
     dispositivo = get_object_or_404(Dispositivo, pk=pk)
 
-    # Busca todo o histórico de atribuições para este dispositivo, das mais recentes às mais antigas
+    # Recupera tutto lo storico delle assegnazioni per questo dispositivo, dalle più recenti alle più vecchie
     storico_assegnazioni = Assegnazione.objects.filter(dispositivo=dispositivo).order_by('-data_assegnazione')
 
     context = {
@@ -505,7 +502,7 @@ def dettaglio_dispositivo(request, pk):
 
 
 def lista_utenti(request):
-    # Busca todos os usuários, ordenados por sobrenome e nome
+    # Recupera tutti gli utenti, ordinati per cognome e nome
     utenti_list = Utente.objects.all().order_by('cognome', 'nome')
 
     context = {
@@ -516,10 +513,10 @@ def lista_utenti(request):
 
 
 def dettaglio_utente(request, pk):
-    # Busca o usuário pelo seu ID (pk)
+    # Recupera l'utente tramite ID (pk)
     utente = get_object_or_404(Utente, pk=pk)
 
-    # Busca todo o histórico de atribuições para este usuário
+    # Recupera tutto lo storico delle assegnazioni per questo utente
     storico_assegnazioni = Assegnazione.objects.filter(utente=utente).order_by('-data_assegnazione')
 
     context = {
@@ -531,7 +528,7 @@ def dettaglio_utente(request, pk):
 
 
 def assegnazioni_mensili_data(request):
-    # Agrupa por mês e, dentro de cada mês, conta quantos são 'Office' e quantos são 'CAD'
+    # Raggruppa per mese e, all'interno di ogni mese, conta quanti sono 'Office' e quanti 'CAD'
     data = Assegnazione.objects.annotate(
         month=TruncMonth('data_assegnazione')
     ).values('month').annotate(
@@ -539,19 +536,19 @@ def assegnazioni_mensili_data(request):
         cad_count=Count('id', filter=Q(dispositivo__tipo='CAD'))
     ).order_by('month')
 
-    # Formata os dados para o formato que o Chart.js espera para gráficos empilhados
+    # Formatta i dati nel formato atteso da Chart.js per grafici a barre sovrapposte
     labels = [d['month'].strftime('%b %Y') for d in data]
 
     datasets = [
         {
             'label': 'Office',
             'data': [d['office_count'] for d in data],
-            'backgroundColor': 'rgba(0, 123, 255, 0.7)', # Azul
+            'backgroundColor': 'rgba(0, 123, 255, 0.7)', # Blu
         },
         {
             'label': 'CAD',
             'data': [d['cad_count'] for d in data],
-            'backgroundColor': 'rgba(255, 193, 7, 0.7)', # Amarelo
+            'backgroundColor': 'rgba(255, 193, 7, 0.7)', # Giallo
         }
     ]
 
@@ -560,24 +557,24 @@ def assegnazioni_mensili_data(request):
 
 def preparazioni_per_motivo_data(request):
     today = date.today()
-    # --- A MUDANÇA ESTÁ AQUI ---
-    # Em vez de 1 ano atrás, pegamos 3 anos atrás.
-    # date(today.year - 3, 1, 1) significa "1 de janeiro, três anos atrás".
+    # --- LA MODIFICA È QUI ---
+    # Invece di 1 anno fa, recuperiamo 3 anni fa.
+    # date(today.year - 3, 1, 1) significa "1° gennaio, tre anni fa".
     three_years_ago = date(today.year - 3, 1, 1)
 
-    # Filtra as preparações finalizadas nos últimos 3 anos
+    # Filtra le preparazioni completate negli ultimi 3 anni
     preparazioni_recenti = Preparazione.objects.filter(
         data_pianificazione__gte=three_years_ago,
         stato_preparazione='Completato'
     )
 
-    # O resto da lógica continua exatamente o mesmo
-    novos_funcionarios = preparazioni_recenti.filter(tipo_richiesta='Nuova Assunzione', categoria='Standard').count()
-    novos_stagisti = preparazioni_recenti.filter(tipo_richiesta='Nuova Assunzione', categoria='Stagista/Interinale').count()
-    trocas_reassegnazioni = preparazioni_recenti.filter(Q(tipo_richiesta='Sostituzione') | Q(categoria='Riassegnazione')).count()
+    # Il resto della logica rimane invariato
+    nuovi_funzionari = preparazioni_recenti.filter(tipo_richiesta='Nuova Assunzione', categoria='Standard').count()
+    nuovi_stagisti = preparazioni_recenti.filter(tipo_richiesta='Nuova Assunzione', categoria='Stagista/Interinale').count()
+    sostituzioni_riassegnazioni = preparazioni_recenti.filter(Q(tipo_richiesta='Sostituzione') | Q(categoria='Riassegnazione')).count()
 
     labels = ['Nuovi Funzionari', 'Stagisti/Interinali', 'Sostituzioni/Extra']
-    chart_data = [novos_funcionarios, novos_stagisti, trocas_reassegnazioni]
+    chart_data = [nuovi_funzionari, nuovi_stagisti, sostituzioni_riassegnazioni]
 
     return JsonResponse({'labels': labels, 'data': chart_data})
 
@@ -590,18 +587,18 @@ def search_results(request):
     preparazioni_results = Preparazione.objects.none()
 
     if query:
-        # Busca em Dispositivos
+        # Ricerca in Dispositivi
         dispositivi_results = Dispositivo.objects.filter(
             Q(hostname__icontains=query) | 
             Q(cespite__icontains=query) | 
             Q(modello__icontains=query)
         )
-        # Busca em Utenti
+        # Ricerca in Utenti
         utenti_results = Utente.objects.filter(
             Q(nome__icontains=query) | 
             Q(cognome__icontains=query)
         )
-        # --- LÓGICA DE BUSCA MELHORADA PARA PREPARAZIONI ---
+        # --- LOGICA DI RICERCA MIGLIORATA PER PREPARAZIONI ---
         preparazioni_results = Preparazione.objects.filter(
             Q(ticket_helpdesk__icontains=query) |
             Q(utente__nome__icontains=query) |
@@ -609,7 +606,7 @@ def search_results(request):
             Q(nome_nuovo_utente__icontains=query) |
             Q(cognome_nuovo_utente__icontains=query)
         )
-        # Permite também buscar pelo número do ID
+        # Permette anche la ricerca per numero ID
         if query.isdigit():
             preparazioni_results = preparazioni_results.union(Preparazione.objects.filter(pk=query))
 

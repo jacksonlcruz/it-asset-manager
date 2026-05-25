@@ -38,14 +38,14 @@
             <p><strong>Luogo Intervento:</strong> {{ preparazione.luogo_intervento.nome|default:"Non specificato" }}</p>
             <hr>
 
-            {# SE A PREPARAÇÃO JÁ FOI COMPLETADA, MOSTRA OS DADOS FINAIS DA ATRIBUIÇÃO #}
+            {# SE LA PREPARAZIONE È GIÀ STATA COMPLETATA, MOSTRA I DATI FINALI DELL'ASSEGNAZIONE #}
             {% if preparazione.stato_preparazione == 'Completato' and preparazione.assegnazione %}
                 <h4>Dettagli dell'Assegnazione Finale</h4>
                 <p><strong>Utente:</strong> {{ preparazione.assegnazione.utente }}</p>
                 <p><strong>Dispositivo Assegnato:</strong> {{ preparazione.assegnazione.dispositivo.hostname }}</p>
                 <p><strong>Data Assegnazione:</strong> {{ preparazione.assegnazione.data_assegnazione|date:"d/m/Y" }}</p>
             
-            {# SE AINDA NÃO FOI COMPLETADA, MOSTRA OS DADOS DA PREPARAÇÃO #}
+            {# SE NON È ANCORA STATA COMPLETATA, MOSTRA I DATI DELLA PREPARAZIONE #}
             {% else %}
                 <h4>Dettagli della Preparazione</h4>
                 {% if preparazione.tipo_richiesta == 'Sostituzione' %}

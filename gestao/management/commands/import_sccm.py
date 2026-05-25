@@ -1,4 +1,4 @@
-# gestao/management/commands/import_sccm.py - VERSÃO FINAL COM CORREÇÃO DE USUÁRIO EXTERNO
+# gestao/management/commands/import_sccm.py - VERSIONE FINALE CON CORREZIONE UTENTE ESTERNO
 
 import csv
 import re
@@ -7,36 +7,36 @@ from django.core.management.base import BaseCommand
 from gestao.models import Utente, Dipartimento, Dispositivo, Assegnazione
 
 class Command(BaseCommand):
-    help = 'Importa o inventário completo do arquivo de exportação do SCCM.'
+    help = 'Importa l\'inventario completo dal file di esportazione SCCM.'
 
     def parse_owner_string(self, raw_string):
-        """Função auxiliar para extrair dados do campo Owner (versão corrigida)."""
+        """Funzione ausiliaria per estrarre i dati dal campo Owner."""
         if not raw_string or '\\' in raw_string:
             return None, None, None, 'Interno'
 
         cognome, nome, dipartimento_nome, tipo_contratto = '', '', None, 'Interno'
         
-        # 1. Primeiro, verifica se é um usuário externo para definir o tipo
+        # 1. Prima, verifica se è un utente esterno per definire il tipo
         if ', extern)' in raw_string.lower():
             tipo_contratto = 'Esterno'
 
-        # 2. Extrai o conteúdo de dentro dos parênteses (seja qual for)
+        # 2. Estrae il contenuto all'interno delle parentesi
         match_dip = re.search(r'\((.*?)\)', raw_string)
         if match_dip:
-            # Pega tudo que está dentro dos parênteses
+            # Prende tutto ciò che è dentro le parentesi
             full_dip_string = match_dip.group(1).strip()
-            # O nome do departamento é a primeira parte antes da vírgula
+            # Il nome del dipartimento è la prima parte prima della virgola
             dipartimento_nome = full_dip_string.split(',')[0].strip()
-            # Remove o conteúdo dos parênteses da string original para facilitar o parsing do nome
+            # Rimuove il contenuto delle parentesi dalla stringa originale per facilitare il parsing del nome
             raw_string = re.sub(r'\s*\([^)]+\)', '', raw_string)
         
-        # 3. Extrai o nome e o sobrenome do que sobrou
+        # 3. Estrae il nome e il cognome da ciò che rimane
         match_nome = re.match(r'([^,]+),\s*(.+)', raw_string)
         if match_nome:
             cognome = match_nome.group(1).strip()
             nome = match_nome.group(2).strip()
         else:
-            # Fallback se o formato não tiver vírgula
+            # Fallback se il formato non ha la virgola
             cognome = raw_string.strip()
 
         return nome, cognome, dipartimento_nome, tipo_contratto
@@ -44,7 +44,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         file_path = 'sccm_export.csv'
         warehouse_locations = ["ICT DHS", "ICT DHS Nizza", "ICT DHS Nichelino"]
-        self.stdout.write(self.style.SUCCESS(f'Iniciando importação do arquivo {file_path}...'))
+        self.stdout.write(self.style.SUCCESS(f'Avvio importazione dal file {file_path}...'))
 
         try:
             with open(file_path, mode='r', encoding='latin-1', errors='ignore') as csvfile:
@@ -54,22 +54,22 @@ class Command(BaseCommand):
                     hostname = row.get('Asset Name', '').strip()
                     if not hostname: continue
                     
-                    self.stdout.write(f'--- Processando {hostname} (linha {i}) ---')
+                    self.stdout.write(f'--- Elaborazione {hostname} (riga {i}) ---')
 
-                    # A lógica para criar/atualizar dispositivo e atribuição continua a mesma...
+                    # Logica per creare/aggiornare dispositivo e assegnazione...
                     cespite_val = row.get('Asset IDG', '').strip()
                     serial_val = row.get('Serial Number', '').strip()
                     if cespite_val.upper() == 'NO' or not cespite_val: cespite_val = None
                     if serial_val.upper() == 'NO' or not serial_val: serial_val = None
 
                     if Dispositivo.objects.filter(hostname=hostname).exists():
-                        self.stdout.write(self.style.NOTICE(f'Dispositivo com hostname "{hostname}" já existe. Pulando.'))
+                        self.stdout.write(self.style.NOTICE(f'Dispositivo con hostname "{hostname}" già esistente. Saltato.'))
                         continue
                     if cespite_val and Dispositivo.objects.filter(cespite=cespite_val).exists():
-                        self.stdout.write(self.style.NOTICE(f'Dispositivo com cespite "{cespite_val}" já existe. Pulando.'))
+                        self.stdout.write(self.style.NOTICE(f'Dispositivo con cespite "{cespite_val}" già esistente. Saltato.'))
                         continue
                     if serial_val and Dispositivo.objects.filter(numero_serie=serial_val).exists():
-                         self.stdout.write(self.style.NOTICE(f'Dispositivo com S/N "{serial_val}" já existe. Pulando.'))
+                         self.stdout.write(self.style.NOTICE(f'Dispositivo con S/N "{serial_val}" già esistente. Saltato.'))
                          continue
 
                     location = row.get('Location', '').strip()
@@ -85,7 +85,7 @@ class Command(BaseCommand):
                         marca=row.get('Manufacturer', '').strip(), modello=row.get('Model', '').strip(),
                         tipo=tipo_dispositivo, stato=stato, locazione_magazzino=locazione_magazzino, data_acquisto=data_acquisto
                     )
-                    self.stdout.write(f'-> Dispositivo "{hostname}" criado com status "{stato}".')
+                    self.stdout.write(f'-> Dispositivo "{hostname}" creato con stato "{stato}".')
 
                     if stato == 'Assegnato':
                         owner_raw = row.get('Owner', '').strip()
@@ -102,9 +102,9 @@ class Command(BaseCommand):
                                 dispositivo=dispositivo_obj, utente=utente_obj,
                                 defaults={'data_assegnazione': data_acquisto or datetime.now().date()}
                             )
-                            self.stdout.write(self.style.SUCCESS(f'-> Atribuído a "{utente_obj}", Tipo: {tipo_contratto}'))
+                            self.stdout.write(self.style.SUCCESS(f'-> Assegnato a "{utente_obj}", Tipo: {tipo_contratto}'))
 
         except FileNotFoundError:
-            self.stdout.write(self.style.ERROR(f'ERRO: Arquivo "{file_path}" não encontrado.'))
+            self.stdout.write(self.style.ERROR(f'ERRORE: File "{file_path}" non trovato.'))
         
-        self.stdout.write(self.style.SUCCESS('--- Importação Finalizada! ---'))
+        self.stdout.write(self.style.SUCCESS('--- Importazione Completata! ---'))

@@ -1,4 +1,4 @@
-# gestao/management/commands/import_historico.py - VERSÃO COM LÓGICA DE TIPOLOGIA
+# gestao/management/commands/import_historico.py - VERSIONE CON LOGICA DI TIPOLOGIA
 
 import csv
 from datetime import datetime
@@ -8,24 +8,24 @@ from django.utils import timezone
 from gestao.models import Utente, Dipartimento, Dispositivo, Assegnazione, Preparazione
 
 class Command(BaseCommand):
-    help = 'Importa o histórico do arquivo padronizado Storico.csv'
+    help = 'Importa lo storico dal file standardizzato Storico.csv'
 
     def handle(self, *args, **kwargs):
         file_path = 'Storico.csv'
-        self.stdout.write(self.style.SUCCESS(f'Iniciando importação do arquivo {file_path}...'))
+        self.stdout.write(self.style.SUCCESS(f'Avvio importazione dal file {file_path}...'))
 
         try:
             with open(file_path, mode='r', encoding='latin-1', errors='ignore') as csvfile:
                 reader = csv.DictReader(csvfile, delimiter=';')
                 
                 for i, row in enumerate(reader, start=2):
-                    self.stdout.write(f'--- Processando linha {i} ---')
+                    self.stdout.write(f'--- Elaborazione riga {i} ---')
                     try:
                         hostname = row.get('Hostname', '').strip()
                         if not hostname or Dispositivo.objects.filter(hostname=hostname).exists():
                             continue
 
-                        # ... (Busca de objetos relacionados continua a mesma) ...
+                        # ... (Recupero oggetti correlati) ...
                         dipartimento_obj = None
                         nome_dipartimento = row.get('Dipartimento', '').strip()
                         if nome_dipartimento:
@@ -44,7 +44,7 @@ class Command(BaseCommand):
                         except (ValueError, TypeError):
                             data_acquisto = None
                         
-                        # --- NOVA LÓGICA INTELIGENTE PARA TIPOLOGIA ---
+                        # --- NUOVA LOGICA INTELLIGENTE PER TIPOLOGIA ---
                         modello_str = row.get('Modello', '').lower()
                         if any(term in modello_str for term in ['zbook', 'fury', 'z2', 'z16']):
                             tipologia = 'CAD'
@@ -57,13 +57,13 @@ class Command(BaseCommand):
                             numero_serie=row.get('Cespite', '').strip() or hostname,
                             marca=row.get('Brand', '').strip(),
                             modello=row.get('Modello', '').strip(),
-                            tipo=tipologia, # <-- USA A NOVA LÓGICA
+                            tipo=tipologia, # <-- USA LA NUOVA LOGICA
                             password_administrator=row.get('PSW CIRESON', '').strip(),
                             data_acquisto=data_acquisto,
                             stato='Disponibile'
                         )
                         
-                        # ... (O resto da criação da Preparazione e Assegnazione continua o mesmo) ...
+                        # ... (Il resto della creazione di Preparazione e Assegnazione rimane uguale) ...
                         
                         try:
                             data_assegnazione_str = row.get('Data pianificazione', '').split(' ')[0]
@@ -89,12 +89,12 @@ class Command(BaseCommand):
                         assegnazione = Assegnazione.objects.create(dispositivo=dispositivo_obj, utente=utente_obj, data_assegnazione=data_assegnazione)
                         preparazione.assegnazione = assegnazione
                         preparazione.save()
-                        self.stdout.write(self.style.SUCCESS(f'Importado: Atribuição de "{hostname}" para "{utente_obj}" como tipo "{tipologia}".'))
+                        self.stdout.write(self.style.SUCCESS(f'Importato: Assegnazione di "{hostname}" a "{utente_obj}" come tipo "{tipologia}".'))
 
                     except Exception as e:
-                        self.stdout.write(self.style.ERROR(f'Erro ao processar linha {i}: {e}'))
+                        self.stdout.write(self.style.ERROR(f'Errore durante l\'elaborazione della riga {i}: {e}'))
         
         except FileNotFoundError:
-            self.stdout.write(self.style.ERROR(f'ERRO: Arquivo "{file_path}" não encontrado.'))
+            self.stdout.write(self.style.ERROR(f'ERRORE: File "{file_path}" non trovato.'))
         
-        self.stdout.write(self.style.SUCCESS('--- Importação Finalizada! ---'))
+        self.stdout.write(self.style.SUCCESS('--- Importazione Completata! ---'))

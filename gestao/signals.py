@@ -1,11 +1,11 @@
-# gestao/signals.py (Arquivo Novo)
+# gestao/signals.py
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from .models import Preparazione
 
 @receiver(post_save, sender=Preparazione)
 def update_dispositivo_status_on_save(sender, instance, created, **kwargs):
-    # Se um dispositivo novo foi linkado, marca como reservado
+    # Se un nuovo dispositivo è stato collegato, lo segna come riservato
     if instance.dispositivo_nuovo:
         dispositivo = instance.dispositivo_nuovo
         if dispositivo.stato == 'Disponibile':
@@ -14,7 +14,7 @@ def update_dispositivo_status_on_save(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Preparazione)
 def update_dispositivo_status_on_delete(sender, instance, **kwargs):
-    # Se a preparação deletada tinha um dispositivo reservado, libera ele
+    # Se la preparazione eliminata aveva un dispositivo riservato, lo libera
     if instance.dispositivo_nuovo:
         dispositivo = instance.dispositivo_nuovo
         if dispositivo.stato == 'Riservato':

@@ -1,4 +1,4 @@
-# gestao/models.py - VERSÃO CORRIGIDA E COMPLETA
+# gestao/models.py - VERSIONE CORRETTA E COMPLETA
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -32,7 +32,7 @@ class Utente(models.Model):
     nome = models.CharField(max_length=100)
     cognome = models.CharField(max_length=100)
     dipartimento = models.ForeignKey(Dipartimento, on_delete=models.SET_NULL, blank=True, null=True)
-    tipo_contratto = models.CharField(max_length=50, choices=TIPO_CONTRATTO_CHOICES, default='Interno') # <-- NOSSO NOVO CAMPO
+    tipo_contratto = models.CharField(max_length=50, choices=TIPO_CONTRATTO_CHOICES, default='Interno') # <-- NUOVO CAMPO
     attivo = models.BooleanField(default=True)
 
     class Meta:
@@ -42,7 +42,7 @@ class Utente(models.Model):
         return f"{self.cognome}, {self.nome}"
 
 class Dispositivo(models.Model):
-    # --- Nossas Novas Listas de Opções ---
+    # --- Nuove Liste di Opzioni ---
     STATO_CHOICES = [
         ('Disponibile', 'Disponibile'),
         ('Riservato', 'Riservato'),
@@ -60,12 +60,12 @@ class Dispositivo(models.Model):
     ]
 
     cespite = models.CharField(max_length=255, unique=True, blank=True, null=True, verbose_name="Cespite / N° Patrimônio")
-    tipo = models.CharField(max_length=50, choices=TIPO_CHOICES) # Adicionamos as escolhas aqui
+    tipo = models.CharField(max_length=50, choices=TIPO_CHOICES) # Aggiunta lista di scelte
     marca = models.CharField(max_length=100)
     modello = models.CharField(max_length=100)
     numero_serie = models.CharField(max_length=255, unique=True, blank=True, null=True)
     hostname = models.CharField(max_length=255, unique=True)
-    stato = models.CharField(max_length=50, choices=STATO_CHOICES, default='Disponibile') # Adicionamos as escolhas aqui
+    stato = models.CharField(max_length=50, choices=STATO_CHOICES, default='Disponibile') # Aggiunta lista di scelte
     data_acquisto = models.DateField(blank=True, null=True)
     data_sostituzione_prevista = models.DateField(blank=True, null=True)
     password_administrator = models.CharField(max_length=255, blank=True, null=True, verbose_name="Password Admin")
@@ -75,16 +75,14 @@ class Dispositivo(models.Model):
     def __str__(self):
         return f"{self.hostname} ({self.modello})"
     
-    # --- NOSSA NOVA PROPRIEDADE INTELIGENTE ---
+    # --- PROPRIETÀ INTELLIGENTE: UTENTE ATTUALE ---
     @property
     def utente_attuale(self):
-        # Encontra a atribuição ativa (sem data de devolução) para este dispositivo
+        # Trova l'assegnazione attiva (senza data di restituzione) per questo dispositivo
         assegnazione_attiva = self.assegnazione_set.filter(data_restituzione__isnull=True).first()
         if assegnazione_attiva:
             return assegnazione_attiva.utente
-        return None # Retorna nada se não houver atribuição ativa
-
-# gestao/models.py
+        return None # Restituisce None se non c'è un'assegnazione attiva
 
 class Assegnazione(models.Model):
     dispositivo = models.ForeignKey(Dispositivo, on_delete=models.CASCADE)
@@ -95,20 +93,20 @@ class Assegnazione(models.Model):
     def __str__(self):
         return f"{self.dispositivo.hostname} -> {self.utente}"
 
-    # --- NOSSA NOVA REGRA INTELIGENTE ---
+    # --- REGOLA INTELLIGENTE: AGGIORNAMENTO STATO DISPOSITIVO ---
     def save(self, *args, **kwargs):
-        # Se a atribuição está sendo criada (e não apenas modificada) E não tem data de devolução...
+        # Se l'assegnazione viene creata (e non solo modificata) E non ha data di restituzione...
         if self.pk is None and self.data_restituzione is None:
-            # ...então mude o status do dispositivo para 'Assegnato'
+            # ...allora cambia lo stato del dispositivo in 'Assegnato'
             self.dispositivo.stato = 'Assegnato'
-            self.dispositivo.save() # Salva a mudança no dispositivo
+            self.dispositivo.save() # Salva la modifica sul dispositivo
 
-        # Se uma data de devolução for adicionada, mude o status para 'In Bonifica'
+        # Se viene aggiunta una data di restituzione, cambia lo stato in 'In Bonifica'
         elif self.data_restituzione is not None:
             self.dispositivo.stato = 'In Bonifica'
-            self.dispositivo.save() # Salva a mudança no dispositivo
+            self.dispositivo.save() # Salva la modifica sul dispositivo
 
-        super().save(*args, **kwargs) # Finalmente, continua com o processo normal de salvar a atribuição
+        super().save(*args, **kwargs) # Infine, prosegue con il normale salvataggio dell'assegnazione
 
 class Preparazione(models.Model):
     TIPO_RICHIESTA_CHOICES = [('Nuova Assunzione', 'Nuova Assunzione'), ('Sostituzione', 'Sostituzione')]
@@ -137,23 +135,23 @@ class Preparazione(models.Model):
     dipartimento_nuovo_utente = models.CharField(max_length=100, blank=True, null=True)
     tipo_contratto_nuovo_utente = models.CharField(
         max_length=50, 
-        choices=Utente.TIPO_CONTRATTO_CHOICES, # Reutiliza as escolhas do modelo Utente
+        choices=Utente.TIPO_CONTRATTO_CHOICES, # Riutilizza le scelte del modello Utente
         default='Interno',
         verbose_name="Tipo Contratto (Nuovo Utente)"
     )
 
-    # Campos de Sostituzione
+    # Campi di Sostituzione
     utente = models.ForeignKey(Utente, on_delete=models.SET_NULL, blank=True, null=True)
     dispositivo_vecchio = models.ForeignKey(Dispositivo, related_name='sostituzioni_come_vecchio', on_delete=models.SET_NULL, blank=True, null=True)
-    # O campo manual foi removido do modelo para simplificar
+    # Il campo manuale è stato rimosso dal modello per semplificare
     # dispositivo_vecchio_manuale = models.CharField(max_length=255, blank=True, null=True)
     motivo_sostituzione = models.TextField(blank=True, null=True)
 
-    # --- NOSSO NOVO CAMPO ---
+    # --- NUOVO CAMPO ---
     dispositivo_nuovo = models.ForeignKey(Dispositivo, related_name='assegnazioni_come_nuovo', verbose_name="Nuovo Dispositivo dal Magazzino", on_delete=models.SET_NULL, blank=True, null=True)
     
 
-    # Campos Comuns
+    # Campi Comuni
     ticket_helpdesk = models.CharField(max_length=100, blank=True, null=True)
     TIPOLOGIA_PC_CHOICES = [
     ('Office', 'Office'),
