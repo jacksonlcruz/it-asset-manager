@@ -6,13 +6,14 @@ from datetime import date
 class PreparazioneForm(forms.ModelForm):
     # Transforma o campo de texto em um menu dropdown que busca na tabela Dipartimento
     dipartimento_nuovo_utente = forms.ModelChoiceField(
-        queryset=Dipartimento.objects.all(),
+        queryset=Dipartimento.objects.none(),
         required=False,
         label="Dipartimento (Nuovo Utente)",
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['dipartimento_nuovo_utente'].queryset = Dipartimento.objects.all().order_by('nome')
         # Filtra o campo para mostrar apenas dispositivos com status 'Disponibile'
         self.fields['dispositivo_nuovo'].queryset = Dispositivo.objects.filter(stato='Disponibile').order_by('hostname')
         # Também podemos limitar o campo do dispositivo antigo para mostrar apenas os atribuídos
@@ -121,7 +122,7 @@ class LoteDispositiviForm(forms.Form):
 #Classe de devolucao de PC
 class RestituzioneForm(forms.Form):
     dispositivo = forms.ModelChoiceField(
-        queryset=Dispositivo.objects.filter(stato='Assegnato').order_by('hostname'),
+        queryset=Dispositivo.objects.none(),
         label="Dispositivo a restituire",
         widget=forms.Select(attrs={'class': 'form-select'})
     )
@@ -141,3 +142,7 @@ class RestituzioneForm(forms.Form):
         required=False,
         widget=forms.Textarea(attrs={'rows': 3, 'class': 'form-control'})
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['dispositivo'].queryset = Dispositivo.objects.filter(stato='Assegnato').order_by('hostname')
