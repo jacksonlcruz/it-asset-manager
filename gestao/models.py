@@ -82,7 +82,27 @@ class Dispositivo(models.Model):
         assegnazione_attiva = self.assegnazione_set.filter(data_restituzione__isnull=True).first()
         if assegnazione_attiva:
             return assegnazione_attiva.utente
-        return None # Restituisce None se non c'è un'assegnazione attiva
+        # Se non esiste un'assegnazione attiva, verifica se esiste una Preparazione
+        # che ha riservato questo dispositivo e che contiene informazioni sull'utente.
+        # Preferisce l'assegnazione collegata alla preparazione, poi il campo `utente`
+        # della preparazione, poi nome/cognome del nuovo utente.
+        prep = self.assegnazioni_come_nuovo.select_related('assegnazione').order_by('-id').first()
+        if prep:
+            # Se la preparazione ha un'assegnazione collegata, usa quell'utente
+            if getattr(prep, 'assegnazione', None):
+                return prep.assegnazione.utente
+            # Se la preparazione ha un riferimento a un Utente (sostituzione), usalo
+            if prep.utente:
+                return prep.utente
+            # Se è una nuova assunzione, prova a comporre il nome dal campo testo
+            if prep.cognome_nuovo_utente or prep.nome_nuovo_utente:
+                cognome = prep.cognome_nuovo_utente or ''
+                nome = prep.nome_nuovo_utente or ''
+                if cognome and nome:
+                    return f"{cognome}, {nome}"
+                return (cognome or nome).strip()
+
+        return None # Restituisce None se non c'è un'assegnazione o preparazione utile
 
 class Assegnazione(models.Model):
     dispositivo = models.ForeignKey(Dispositivo, on_delete=models.CASCADE)

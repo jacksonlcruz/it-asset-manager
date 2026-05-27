@@ -9,21 +9,24 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-header">
-                <i class="bi bi-hdd-stack-fill"></i> Disponibilità PC in Magazzino
+                <i class="bi bi-hdd-stack-fill"></i> Disponibilità PC da installare in Magazzino
             </div>
             <div class="card-body">
+                {% if disponibili_office <= 10 or disponibili_cad <= 10 or total_disponibili <= 10 %}
+                <div class="alert alert-danger" role="alert">Attenzione, raggiunto livello di scorta pc.</div>
+                {% endif %}
                 <div class="row text-center">
                     <div class="col">
                         <h5 class="card-title">Office</h5>
-                        <p class="display-4">{{ disponibili_office }}</p>
+                        <p class="display-4 {% if disponibili_office <= 10 %}text-danger{% endif %}">{{ disponibili_office }}</p>
                     </div>
                     <div class="col">
                         <h5 class="card-title">CAD</h5>
-                        <p class="display-4">{{ disponibili_cad }}</p>
+                        <p class="display-4 {% if disponibili_cad <= 10 %}text-danger{% endif %}">{{ disponibili_cad }}</p>
                     </div>
                     <div class="col border-start">
                         <h5 class="card-title">Totale Disponibile</h5>
-                        <p class="display-4 text-success">{{ total_disponibili }}</p>
+                        <p id="total_disponibili" class="display-4 {% if total_disponibili <= 10 %}text-danger{% else %}text-success{% endif %}">{{ total_disponibili }}</p>
                     </div>
                 </div>
             </div>
