@@ -1,0 +1,27 @@
+#!/bin/sh
+# pre-push: dump dev fixtures and commit if changed
+set -e
+if command -v python3 >/dev/null 2>&1; then
+  PY=python3
+elif command -v python >/dev/null 2>&1; then
+  PY=python
+else
+  echo "Python not found; skipping fixture generation"
+  exit 0
+fi
+
+echo "Generating dev fixtures..."
+$PY manage.py dump_devdata || { echo "dump_devdata failed"; exit 1; }
+git add gestao/fixtures/devdata.json || true
+
+echo "Generating sqlite DB from fixtures..."
+$PY scripts/generate_sqlite.py || { echo "generate_sqlite failed"; exit 1; }
+git add db.sqlite3 || true
+
+# If there are staged changes, commit them so they'll be pushed
+if ! git diff --cached --quiet; then
+  echo "Committing generated fixtures..."
+  git commit -m "chore: aggiorna gestao/fixtures/devdata.json [auto]" || true
+fi
+
+exit 0

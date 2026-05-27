@@ -1,0 +1,13 @@
+(2026-05-27 10:30:00Z) Aggiornamenti automatici iniziali per condivisione DB e logging:
+- Aggiunto workflow CI: [.github/workflows/log-modifiche.yml](.github/workflows/log-modifiche.yml) (registra i commit dei push in questo file).
+- Aggiunto `docker-compose.yml` per ambiente Postgres+Adminer (dev): [docker-compose.yml](docker-compose.yml).
+- Aggiunto comando Django per esportare fixture: [gestao/management/commands/dump_devdata.py](gestao/management/commands/dump_devdata.py).
+- Aggiunti hook Git e script di installazione (pre-push, post-merge): [.githooks/pre-push](.githooks/pre-push), [.githooks/post-merge](.githooks/post-merge), [scripts/install-hooks.sh](scripts/install-hooks.sh), [scripts/install-hooks.ps1](scripts/install-hooks.ps1).
+- Aggiunto script per generare DB SQLite da fixture: [scripts/generate_sqlite.py](scripts/generate_sqlite.py).
+- Modificato `asset_manager/settings.py` per usare `db.sqlite3` se presente nel repo (variabili d'ambiente: `USE_REPO_SQLITE`, `FORCE_POSTGRES`).
+- Aggiunta documentazione e istruzioni: [docs/SHARED_DB.md](docs/SHARED_DB.md).
+
+Nota: per far sì che `db.sqlite3` venga generato e committato automaticamente prima del `push`, eseguire una volta lo script di installazione hook sul computer di chi esegue i push:
+	- Unix/WSL/macOS: `./scripts/install-hooks.sh`
+	- Windows PowerShell: `.\scripts\install-hooks.ps1`
+

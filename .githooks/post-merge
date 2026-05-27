@@ -1,0 +1,21 @@
+#!/bin/sh
+# post-merge: run migrations and load fixtures after pull/merge
+set -e
+if command -v python3 >/dev/null 2>&1; then
+  PY=python3
+elif command -v python >/dev/null 2>&1; then
+  PY=python
+else
+  echo "Python not found; skipping post-merge tasks"
+  exit 0
+fi
+
+echo "Running migrations..."
+$PY manage.py migrate --noinput || { echo "migrate failed"; exit 1; }
+
+if [ -f gestao/fixtures/devdata.json ]; then
+  echo "Loading dev fixtures..."
+  $PY manage.py loaddata gestao/fixtures/devdata.json || echo "loaddata returned non-zero (possibly no data), continuing"
+else
+  echo "No devdata.json found, skipping loaddata"
+fi
