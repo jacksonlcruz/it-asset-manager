@@ -31,3 +31,17 @@ Files added:
 Files removed: 
 Files modified: 
 
+
+---- Push: 2026-05-27 12:31:49Z refs/heads/developgio by Giova982 ----
+2026-05-27T14:29:35+02:00 6030c4d Giova982 <giovannibalbi900@etik.com>
+Message: biflux
+Files added: 
+Files removed: 
+Files modified: 
+
+2026-05-27T14:31:23+02:00 7329ac0 Giova982 <giovannibalbi900@etik.com>
+Message: Merge branch 'developgio' of https://github.com/jacksonlcruz/it-asset-manager into developgio
+Files added: 
+Files removed: 
+Files modified: 
+
