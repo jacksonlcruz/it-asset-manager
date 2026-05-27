@@ -1,0 +1,2 @@
+tipo_richiesta,categoria,nome_nuovo_utente,cognome_nuovo_utente,data_ingresso,dipartimento_nuovo_utente,tipo_contratto_nuovo_utente,dispositivo_nuovo_hostname,tipologia_pc_richiesta,data_pianificazione,data_assegnazione,tecnico_username,luogo_intervento
+Nuova Assunzione,Standard,Luciano,Picerno,03/06/2026,IT,Interno,IGITMONCD065,CAD,03/06/2026,03/06/2026,admin,Headquarters
