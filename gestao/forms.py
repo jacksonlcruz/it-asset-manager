@@ -76,8 +76,9 @@ class DispositivoForm(forms.ModelForm):
             'hostname': forms.TextInput(attrs={'class': 'form-control'}),
             'cespite': forms.TextInput(attrs={'class': 'form-control'}),
             'numero_serie': forms.TextInput(attrs={'class': 'form-control'}),
-            'marca': forms.TextInput(attrs={'class': 'form-control'}),
-            'modello': forms.TextInput(attrs={'class': 'form-control'}),
+            # Usa il datalist suggerito: aggiunge l'attributo 'list' per mostrare le opzioni
+            'marca': forms.TextInput(attrs={'class': 'form-control', 'list': 'marca_options'}),
+            'modello': forms.TextInput(attrs={'class': 'form-control', 'list': 'modello_options'}),
             'tipo': forms.Select(attrs={'class': 'form-select'}),
             'stato': forms.Select(attrs={'class': 'form-select'}),
             'data_acquisto': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
@@ -112,8 +113,9 @@ class LottoDispositiviForm(forms.Form):
     # Usa le scelte già definite nel modello Dispositivo
     tipo_dettaglio = forms.ChoiceField(choices=Dispositivo.TIPO_CHOICES, label="Tipologia (Office/CAD, ecc)", widget=forms.Select(attrs={'class': 'form-select'}))
 
-    marca = forms.CharField(max_length=100, label="Marca", widget=forms.TextInput(attrs={'class': 'form-control'}))
-    modello = forms.CharField(max_length=100, label="Modello", widget=forms.TextInput(attrs={'class': 'form-control'}))
+    # Fornisce suggerimenti ma permette comunque l'inserimento libero tramite datalist
+    marca = forms.CharField(max_length=100, label="Marca", widget=forms.TextInput(attrs={'class': 'form-control', 'list': 'marca_options'}))
+    modello = forms.CharField(max_length=100, label="Modello", widget=forms.TextInput(attrs={'class': 'form-control', 'list': 'modello_options'}))
     cespite_iniziale = forms.IntegerField(label="Cespite Iniziale", help_text="Es. 78500", widget=forms.NumberInput(attrs={'class': 'form-control'}))
     quantita = forms.IntegerField(label="Quantità di PC da creare", help_text="Es. 50", min_value=1, initial=1, widget=forms.NumberInput(attrs={'class': 'form-control'}))
     data_acquisto = forms.DateField(label="Data di Acquisto", required=False, widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))

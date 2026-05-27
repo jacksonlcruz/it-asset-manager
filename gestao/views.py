@@ -11,11 +11,9 @@ from dateutil.relativedelta import relativedelta
 
 def dashboard(request):
 
-    # --- LOGICA AGGIORNATA PER CONTARE SOLO I PC NUOVI ---
-    disponibili_novi = Dispositivo.objects.filter(
-    stato='Disponibile', 
-    assegnazione__isnull=True # Conta solo i dispositivi che non hanno MAI avuto un'assegnazione
-    )
+    # --- LOGICA: contare i PC disponibili in magazzino ---
+    # Mostra SOLO i dispositivi con stato 'Disponibile' (esclude 'In Bonifica')
+    disponibili_novi = Dispositivo.objects.filter(stato='Disponibile')
 
     disponibili_office = disponibili_novi.filter(tipo='Office').count()
     disponibili_cad = disponibili_novi.filter(tipo='CAD').count()
@@ -428,18 +426,15 @@ def restituzione_pc(request):
 
 
 def disponibili_per_tipo_chart_data(request):
-    # Raggruppa i dispositivi con stato='Disponibile' per 'tipo' e conta quanti esistono per gruppo
-    data = Dispositivo.objects.filter(stato='Disponibile').values('tipo').annotate(total=Count('tipo')).order_by('tipo')
+    # Restituisce il conteggio dei dispositivi con stato 'Disponibile',
+    # aggregando solo le categorie Office e CAD come richiesto.
+    office = Dispositivo.objects.filter(stato='Disponibile', tipo='Office').count()
+    cad = Dispositivo.objects.filter(stato='Disponibile', tipo='CAD').count()
 
-    # Prepara i dati nel formato atteso da Chart.js
-    labels = [item['tipo'] for item in data]
-    chart_data = [item['total'] for item in data]
+    labels = ['Office', 'CAD']
+    chart_data = [office, cad]
 
-    response_data = {
-        'labels': labels,
-        'data': chart_data,
-    }
-    return JsonResponse(response_data)
+    return JsonResponse({'labels': labels, 'data': chart_data})
 
 
 def report_page(request):
