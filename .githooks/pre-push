@@ -1,5 +1,5 @@
 #!/bin/sh
-# pre-push: dump dev fixtures and commit if changed
+# pre-push: ensure up-to-date with remote, rebase, dump fixtures and generate sqlite DB
 set -e
 if command -v python3 >/dev/null 2>&1; then
   PY=python3
@@ -10,9 +10,12 @@ else
   exit 0
 fi
 
-echo "Generating dev fixtures..."
-$PY manage.py dump_devdata || { echo "dump_devdata failed"; exit 1; }
-git add gestao/fixtures/devdata.json || true
+echo "Fetching origin/$BRANCH and attempting rebase (auto-stash enabled)..."
+git fetch origin "$BRANCH" || { echo "git fetch failed"; exit 1; }
+if ! git rebase --autostash "origin/$BRANCH"; then
+  echo "Auto-rebase failed. Run 'git pull --rebase' and resolve conflicts, then retry push."
+  exit 1
+fi
 
 echo "Generating sqlite DB from fixtures..."
 $PY scripts/generate_sqlite.py || { echo "generate_sqlite failed"; exit 1; }
@@ -20,8 +23,8 @@ git add db.sqlite3 || true
 
 # If there are staged changes, commit them so they'll be pushed
 if ! git diff --cached --quiet; then
-  echo "Committing generated fixtures..."
-  git commit -m "chore: aggiorna gestao/fixtures/devdata.json [auto]" || true
+  echo "Committing generated fixtures and db.sqlite3..."
+  git commit -m "chore: aggiorna devdata + db.sqlite3 [auto]" || true
 fi
 
 exit 0

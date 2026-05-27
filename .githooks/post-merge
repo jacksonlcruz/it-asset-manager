@@ -1,5 +1,5 @@
 #!/bin/sh
-# post-merge: run migrations and load fixtures after pull/merge
+# post-merge: backup previous DB, run migrations and load fixtures after pull/merge
 set -e
 if command -v python3 >/dev/null 2>&1; then
   PY=python3
@@ -10,12 +10,51 @@ else
   exit 0
 fi
 
+# Timestamp and backup dir
+TS=$(date -u +"%Y%m%dT%H%M%SZ")
+BACKUP_DIR=".db_backups"
+mkdir -p "$BACKUP_DIR"
+
+# Try to extract previous HEAD (before merge) from reflog and save previous db.sqlite3 if present in that commit
+PREV_HEAD=""
+if git rev-parse --verify HEAD@{1} >/dev/null 2>&1; then
+  PREV_HEAD=$(git rev-parse HEAD@{1})
+fi
+if [ -n "$PREV_HEAD" ]; then
+  if git ls-tree --name-only -r "$PREV_HEAD" | grep -q '^db.sqlite3$'; then
+    echo "Backing up previous tracked db.sqlite3 from $PREV_HEAD to $BACKUP_DIR/db.sqlite3.$TS"
+    git show "$PREV_HEAD:db.sqlite3" > "$BACKUP_DIR/db.sqlite3.$TS" || echo "failed to extract previous db from git"
+  else
+    if [ -f db.sqlite3 ]; then
+      echo "Backing up local db.sqlite3 to $BACKUP_DIR/db.sqlite3.$TS"
+      cp db.sqlite3 "$BACKUP_DIR/db.sqlite3.$TS" || true
+    fi
+  fi
+else
+  if [ -f db.sqlite3 ]; then
+    echo "Backing up local db.sqlite3 to $BACKUP_DIR/db.sqlite3.$TS"
+    cp db.sqlite3 "$BACKUP_DIR/db.sqlite3.$TS" || true
+  fi
+fi
+
 echo "Running migrations..."
 $PY manage.py migrate --noinput || { echo "migrate failed"; exit 1; }
 
-if [ -f gestao/fixtures/devdata.json ]; then
-  echo "Loading dev fixtures..."
-  $PY manage.py loaddata gestao/fixtures/devdata.json || echo "loaddata returned non-zero (possibly no data), continuing"
+# Detect whether db.sqlite3 was changed by the merge (between previous HEAD and current HEAD)
+CHANGED_DB=0
+if [ -n "$PREV_HEAD" ]; then
+  if git diff --name-only "$PREV_HEAD" HEAD | grep -q '^db.sqlite3$'; then
+    CHANGED_DB=1
+  fi
+fi
+
+if [ "$CHANGED_DB" -eq 1 ]; then
+  echo "db.sqlite3 changed in the merge; using repository version (no loaddata)."
 else
-  echo "No devdata.json found, skipping loaddata"
+  if [ -f gestao/fixtures/devdata.json ]; then
+    echo "Loading dev fixtures..."
+    $PY manage.py loaddata gestao/fixtures/devdata.json || echo "loaddata returned non-zero (possibly no data), continuing"
+  else
+    echo "No devdata.json found, skipping loaddata"
+  fi
 fi
