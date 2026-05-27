@@ -8,6 +8,7 @@ from datetime import date, timedelta
 from .forms import PreparazioneForm, DispositivoForm, LottoDispositiviForm, RestituzioneForm
 from django.db.models.functions import TruncMonth
 from dateutil.relativedelta import relativedelta
+from urllib.parse import quote
 
 def dashboard(request):
 
@@ -53,7 +54,36 @@ def dashboard(request):
         'page_title': 'Dashboard'
     }
 
+    # --- Mailto link per avviso scorte basse ---
+    low_types = []
+    if disponibili_office <= 10:
+        low_types.append('Office')
+    if disponibili_cad <= 10:
+        low_types.append('CAD')
+
+    if low_types:
+        low_types_str = ' e '.join(low_types) if len(low_types) > 1 else low_types[0]
+    elif total_disponibili <= 10:
+        low_types_str = 'totale'
+    else:
+        low_types_str = ''
+
+    mailto_link = ''
+    if low_types_str:
+        subject = 'Livello forniture pc basso'
+        body = (f"Buongiorno a tutti, la seguente mail per avvisare che le scorte di pc ({low_types_str}) "
+                "stanno per terminare. Se possibile provvedere ad eseguire un nuovo ordine. Grazie.")
+        mailto_link = f"mailto:?subject={quote(subject)}&body={quote(body)}"
+
+    context['mailto_link'] = mailto_link
+
     return render(request, 'gestao/dashboard.html', context)
+
+
+def dashboard_esterni(request):
+    """Pagina semplice per Dashboard Esterni con messaggio placeholder."""
+    context = {'page_title': 'Dashboard Esterni'}
+    return render(request, 'gestao/dashboard_esterni.html', context)
 
 def lista_dispositivi(request):
     # --- Logica per l'eliminazione multipla ---

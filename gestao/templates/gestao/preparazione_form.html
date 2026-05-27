@@ -26,6 +26,10 @@
                 <hr>
                 <button type="submit" class="btn btn-success">Salva Preparazione</button>
                 <a href="{% url 'lista_preparazioni' %}" class="btn btn-secondary">Annulla</a>
+
+                <!-- Mailto buttons: mostrati dinamicamente in base a 'tipo_richiesta' -->
+                <a id="mailto_nuova" href="#" class="btn btn-outline-primary ms-2" style="display:none">e-mail nuova risorsa in ingresso</a>
+                <a id="mailto_sostituzione" href="#" class="btn btn-outline-primary ms-2" style="display:none">e-mail Sostituzione pc</a>
             </form>
         </div>
     </div>
@@ -101,12 +105,99 @@
         }
 
         // --- Adiciona os 'escutadores' de eventos ---
-        tipoRichiestaSelect.addEventListener('change', toggleCampi);
-        utenteSelect.addEventListener('change', aggiornaDispositiviVecchi);
-        tipologiaPCSelect.addEventListener('change', aggiornaDispositiviNuovi);
+        const mailtoNuovaBtn = document.querySelector('#mailto_nuova');
+        const mailtoSostBtn = document.querySelector('#mailto_sostituzione');
+
+        function updateMailButtons() {
+            const tipoSelezionato = tipoRichiestaSelect.value;
+
+            function getSelectText(el) {
+                if (!el) return '';
+                if (el.tagName === 'SELECT') {
+                    const opt = el.options[el.selectedIndex];
+                    return opt ? opt.text.trim() : '';
+                }
+                return el.value || '';
+            }
+
+            // Raccogli i valori dal form
+            const nomeNuovo = (document.querySelector('#id_nome_nuovo_utente') || {}).value || '';
+            const cognomeNuovo = (document.querySelector('#id_cognome_nuovo_utente') || {}).value || '';
+            const dataIngresso = (document.querySelector('#id_data_ingresso') || {}).value || '';
+            const dipartimento = getSelectText(document.querySelector('#id_dipartimento_nuovo_utente')) || '';
+            const tipoContratto = getSelectText(document.querySelector('#id_tipo_contratto_nuovo_utente')) || '';
+            const tipologiaPCVal = getSelectText(tipologiaPCSelect) || tipologiaPCSelect.value || '';
+            const noteSoftwareVal = (document.querySelector('#id_note_software') || {}).value || '';
+
+            const utenteText = getSelectText(utenteSelect) || '';
+            const dispVecchioText = getSelectText(dispositivoVecchioSelect) || '';
+            const dispNuovoText = getSelectText(dispositivoNuovoSelect) || '';
+            const motivoSostVal = (document.querySelector('#id_motivo_sostituzione') || {}).value || '';
+            const dataPianificazioneVal = (document.querySelector('#id_data_pianificazione') || {}).value || '';
+
+            // Nuova Assunzione: costruisci il corpo includendo i campi presenti
+            if (tipoSelezionato === 'Nuova Assunzione') {
+                const subject = 'Nuova risorsa in ingresso';
+                let body = `Buongiorno,\nla contatto per sapere la tipologia di computer (Office oppure Cad) ed i software necessari per la nuova risorsa in ingresso:\n\n`;
+                if (nomeNuovo || cognomeNuovo) body += `Nome: ${nomeNuovo} ${cognomeNuovo}\n`;
+                if (dataIngresso) body += `Data ingresso: ${dataIngresso}\n`;
+                if (dipartimento) body += `Dipartimento: ${dipartimento}\n`;
+                if (tipoContratto) body += `Tipo contratto: ${tipoContratto}\n`;
+                if (tipologiaPCVal) body += `Tipologia richiesta: ${tipologiaPCVal}\n`;
+                if (noteSoftwareVal) body += `Note software richieste: ${noteSoftwareVal}\n`;
+                body += `\nResto in attesa di istruzioni\n\nGiovanni Balbi\ngiovanni.balbi@partner.italdesign.it\nIG/S-31 –Technical ICT, Service Desk & Support User\nBy Vargroup S.p.A.`;
+
+                mailtoNuovaBtn.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                mailtoNuovaBtn.style.display = 'inline-block';
+            } else {
+                mailtoNuovaBtn.style.display = 'none';
+            }
+
+            // Sostituzione: costruisci il corpo includendo i campi presenti
+            if (tipoSelezionato === 'Sostituzione') {
+                const subject = 'Sostituzione pc';
+                let body = `Buongiorno,\nti informiamo che è disponibile il tuo nuovo notebook destinato a sostituire quello attualmente in uso. \nPer procedere con la configurazione e la consegna, avremmo bisogno di alcune informazioni preliminari:\n\n`;
+                if (utenteText) body += `Utente: ${utenteText}\n`;
+                if (dispVecchioText) body += `Dispositivo attuale: ${dispVecchioText}\n`;
+                if (dispNuovoText) body += `Nuovo dispositivo (magazzino): ${dispNuovoText}\n`;
+                if (motivoSostVal) body += `Motivo sostituzione: ${motivoSostVal}\n`;
+                if (tipologiaPCVal) body += `Tipologia richiesta: ${tipologiaPCVal}\n`;
+                if (noteSoftwareVal) body += `Note software: ${noteSoftwareVal}\n`;
+                if (dataPianificazioneVal) body += `Data pianificata (se indicata): ${dataPianificazioneVal}\n`;
+
+                body += `\n1. Dotazione Hardware e Software\n• Periferiche: Confermi di avere già in dotazione monitor, tastiera e mouse funzionanti?\n• Verifica Docking Station: Ti chiediamo di verificare il modello della tua attuale docking station. Verrà sostituita solo nel caso in cui non risulti compatibile con il nuovo PC.\n• Software Specifici: Utilizzi programmi particolari oltre a quelli standard (Office 365, Teams, Adobe Reader, Edge, Firefox, VLC)?\nEsempi: Catia V5, Alias, Photoshop, Connect, ecc. (da richiedere singolarmente).\n2. Pianificazione della Sostituzione\nTi chiediamo di indicarci almeno due date/orari preferenziali per l'appuntamento.\n• Tempistiche: L'operazione richiede solitamente 2-3 ore, a seconda della mole di dati.\n• OneDrive: Se i tuoi dati sono già sincronizzati su OneDrive o su aree di rete aziendali, il tempo di fermo macchina sarà quasi azzerato. Verifica che la sincronizzazione sia completa prima dell'incontro.\n\nIstruzioni per la Migrazione Dati\nVerranno trasferiti esclusivamente i contenuti presenti nelle seguenti cartelle:\n• C:\\Utente\\ (Documenti, Desktop, Immagini, Video, Musica, Preferiti, Download, Registrazioni Lync)\n• C:\\idg_local\\data\\* (Cartella progetti)\n• D:\\idg_local\\data\\* (Se esistente)\nNota bene: Tutto ciò che si trova al di fuori di questi percorsi non verrà copiato. Ti invitiamo a eliminare i file superflui dal PC attuale per velocizzare il processo.\n\nLogistica: Riconsegna e Nuova Dotazione\nAl momento dello scambio, ti chiediamo di rimuovere gli oggetti personali dalla borsa, eventuali CD/DVD dai lettori e ricevitori USB (mouse/tastiere).\nCosa restituire\tCosa riceverai\nLaptop e borsa\tNuovo Laptop e borsa\nAlimentatore PC\tNuovo Alimentatore PC\nDocking + Alimentatore (solo se incompatibili)\tNuova Docking + Alimentatore (se necessaria)\nLettore PKI esterno (se presente)\tLettore PKI / Cavo di sicurezza (se previsto)\n\nATTENZIONE: Ti preghiamo di segnalarci preventivamente se utilizzi applicazioni o configurazioni "VAS".\n\nUna volta ricevuti questi dettagli, concorderemo insieme la data definitiva per il passaggio dei dati e la consegna del materiale.\n\nIn attesa di un tuo riscontro, ti auguriamo un buon lavoro.\nCordialità\n\nGiovanni Balbi\ngiovanni.balbi@partner.italdesign.it\nIG/S-31 –Technical ICT, Service Desk & Support User\nBy Vargroup S.p.A.`;
+
+                mailtoSostBtn.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                mailtoSostBtn.style.display = 'inline-block';
+            } else {
+                mailtoSostBtn.style.display = 'none';
+            }
+        }
+
+        
         
         // Executa a função uma vez no início para garantir o estado correto da página
-        toggleCampi();
+            tipoRichiestaSelect.addEventListener('change', function() { toggleCampi(); updateMailButtons(); });
+            utenteSelect.addEventListener('change', aggiornaDispositiviVecchi);
+            tipologiaPCSelect.addEventListener('change', aggiornaDispositiviNuovi);
+
+            // Aggiorna il mailto anche quando l'utente modifica altri campi
+            ['#id_nome_nuovo_utente', '#id_cognome_nuovo_utente', '#id_data_ingresso', '#id_note_software', '#id_motivo_sostituzione', '#id_data_pianificazione'].forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) el.addEventListener('input', updateMailButtons);
+            });
+            ['#id_dipartimento_nuovo_utente', '#id_tipo_contratto_nuovo_utente', '#id_dispositivo_nuovo', '#id_dispositivo_vecchio'].forEach(sel => {
+                const el = document.querySelector(sel);
+                if (el) el.addEventListener('change', updateMailButtons);
+            });
+
+            // Ricostruisce il mailto al click per assicurarsi che i valori siano aggiornati
+            if (mailtoNuovaBtn) mailtoNuovaBtn.addEventListener('click', function() { updateMailButtons(); });
+            if (mailtoSostBtn) mailtoSostBtn.addEventListener('click', function() { updateMailButtons(); });
+
+            // Esegui una volta all'inizio per impostare lo stato iniziale
+            toggleCampi();
+            updateMailButtons();
     });
 </script>
 {% endblock %}
