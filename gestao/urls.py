@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # A string vazia '' significa a raiz do site
     path('', views.dashboard, name='dashboard'),
+    path('esterni/', views.dashboard_esterni, name='dashboard_esterni'),
     path('utenti/', views.lista_utenti, name='lista_utenti'),
     path('dispositivi/', views.lista_dispositivi, name='lista_dispositivi'),
     path('utenti/<int:pk>/', views.dettaglio_utente, name='dettaglio_utente'),

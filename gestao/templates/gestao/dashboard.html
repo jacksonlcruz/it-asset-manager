@@ -13,7 +13,16 @@
             </div>
             <div class="card-body">
                 {% if disponibili_office <= 10 or disponibili_cad <= 10 or total_disponibili <= 10 %}
-                <div class="alert alert-danger" role="alert">Attenzione, raggiunto livello di scorta pc.</div>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div class="me-2">
+                        <div class="alert alert-danger mb-0" role="alert">Attenzione, raggiunto livello di scorta pc.</div>
+                    </div>
+                    {% if mailto_link %}
+                    <div>
+                        <a href="{{ mailto_link }}" class="btn btn-warning">Avvisa tramite e-mail</a>
+                    </div>
+                    {% endif %}
+                </div>
                 {% endif %}
                 <div class="row text-center">
                     <div class="col">
