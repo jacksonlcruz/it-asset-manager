@@ -11,3 +11,11 @@ Nota: per far sì che `db.sqlite3` venga generato e committato automaticamente p
 	- Unix/WSL/macOS: `./scripts/install-hooks.sh`
 	- Windows PowerShell: `.\scripts\install-hooks.ps1`
 
+
+---- Push: 2026-05-27 12:03:51Z refs/heads/developgio by Giova982 ----
+2026-05-27T14:00:01+02:00 aee4935 Giova982 <giovannibalbi900@etik.com>
+Message: chore(shared-db): add sqlite sharing, hooks, scripts, docs and CI log
+Files added: 
+Files removed: 
+Files modified: 
+
