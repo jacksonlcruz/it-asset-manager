@@ -20,6 +20,7 @@ urlpatterns = [
     # --- API ---
     path('api/get-dispositivi-utente/', views.get_dispositivi_utente, name='get_dispositivi_utente'),
     path('api/get-dispositivi-per-tipo/', views.get_dispositivi_per_tipo, name='get_dispositivi_per_tipo'),
+    path('api/search-suggestions/', views.search_suggestions, name='search_suggestions'),
     path('api/chart/disponibili-per-tipo/', views.disponibili_per_tipo_chart_data, name='disponibili_per_tipo_chart_data'),
     path('api/chart/dispositivi-per-marca/', views.dispositivi_per_marca_data, name='dispositivi_per_marca_data'),
     path('api/chart/assegnazioni-mensili/', views.assegnazioni_mensili_data, name='assegnazioni_mensili_data'),

@@ -51,10 +51,10 @@
                         <a class="nav-link" href="{% url 'report_page' %}">Report</a>
                     </li>
                 </ul>
-                <form class="d-flex mx-auto" action="{% url 'search_results' %}" method="get">
-                    <input class="form-control me-2" type="search" name="q" placeholder="Cerca hostname, utente..."
-                        aria-label="Search" value="{{ request.GET.q }}">
+                <form class="d-flex mx-auto position-relative" action="{% url 'search_results' %}" method="get">
+                    <input id="global-search-input" class="form-control me-2" type="search" name="q" placeholder="Cerca hostname, utente..." aria-label="Search" value="{{ request.GET.q }}" autocomplete="off">
                     <button class="btn btn-outline-success" type="submit">Cerca</button>
+                    <div id="global-search-suggestions" class="dropdown-menu" style="position:absolute; top:100%; left:0; z-index:2000; max-height:300px; overflow:auto; display:none;"></div>
                 </form>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -85,6 +85,58 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+    <script>
+    (function(){
+        const input = document.getElementById('global-search-input');
+        const dropdown = document.getElementById('global-search-suggestions');
+        if (!input || !dropdown) return;
+        let timer = null;
+        const minLen = 2;
+
+        function hideDropdown() { dropdown.style.display = 'none'; }
+        function showDropdown() { dropdown.style.display = 'block'; }
+
+        input.addEventListener('input', function(){
+            const q = input.value.trim();
+            if (q.length < minLen) { hideDropdown(); return; }
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(function(){
+                fetch('{% url 'search_suggestions' %}?q=' + encodeURIComponent(q))
+                .then(r => r.json())
+                .then(data => {
+                    dropdown.innerHTML = '';
+                    if (!data || data.length === 0) {
+                        const el = document.createElement('div');
+                        el.className = 'dropdown-item disabled';
+                        el.textContent = 'Nessun suggerimento';
+                        dropdown.appendChild(el);
+                        showDropdown();
+                        return;
+                    }
+                    data.forEach(s => {
+                        const a = document.createElement('a');
+                        a.className = 'dropdown-item';
+                        a.href = s.url || '#';
+                        a.textContent = s.label;
+                        a.addEventListener('click', function(ev){
+                            ev.preventDefault();
+                            if (s.url) { window.location.href = s.url; return; }
+                            input.value = s.value || s.label;
+                            input.form.submit();
+                        });
+                        dropdown.appendChild(a);
+                    });
+                    showDropdown();
+                })
+                .catch(err => { console.error('Search suggestions error', err); hideDropdown(); });
+            }, 220);
+        });
+
+        input.addEventListener('blur', function(){ setTimeout(hideDropdown, 150); });
+        input.addEventListener('focus', function(){ if (dropdown.children.length) showDropdown(); });
+    })();
+    </script>
 
     {% block scripts %}
     {% endblock %}

@@ -9,6 +9,7 @@ from .forms import PreparazioneForm, DispositivoForm, LottoDispositiviForm, Rest
 from django.db.models.functions import TruncMonth
 from dateutil.relativedelta import relativedelta
 from urllib.parse import quote
+from django.urls import reverse
 
 def dashboard(request):
 
@@ -648,3 +649,71 @@ def search_results(request):
         'page_title': f"Risultati per '{query}'"
     }
     return render(request, 'gestao/search_results.html', context)
+
+
+def search_suggestions(request):
+    """Simple JSON API returning search suggestions for the global search box.
+
+    Returns a list of objects: {type, label, value, url}.
+    """
+    q = request.GET.get('q', '').strip()
+    if len(q) < 2:
+        return JsonResponse([], safe=False)
+
+    suggestions = []
+
+    # Dispositivi
+    devices = Dispositivo.objects.filter(
+        Q(hostname__icontains=q) | Q(cespite__icontains=q) | Q(modello__icontains=q)
+    )[:10]
+    for d in devices:
+        label = (d.hostname or d.cespite or f"Dispositivo {d.pk}")
+        if d.modello:
+            label = f"{label} — {d.modello}"
+        suggestions.append({
+            'type': 'device',
+            'label': label,
+            'value': d.hostname or d.cespite or '',
+            'url': reverse('dettaglio_dispositivo', args=[d.pk])
+        })
+
+    # Utenti
+    users = Utente.objects.filter(
+        Q(nome__icontains=q) | Q(cognome__icontains=q)
+    )[:10]
+    for u in users:
+        label = f"{u.cognome} {u.nome}".strip() or f"Utente {u.pk}"
+        suggestions.append({
+            'type': 'user',
+            'label': label,
+            'value': label,
+            'url': reverse('dettaglio_utente', args=[u.pk])
+        })
+
+    # Preparazioni
+    preps = Preparazione.objects.filter(
+        Q(ticket_helpdesk__icontains=q) | Q(nome_nuovo_utente__icontains=q) | Q(cognome_nuovo_utente__icontains=q)
+    )[:10]
+    for p in preps:
+        label = f"Preparazione #{p.pk}"
+        if p.ticket_helpdesk:
+            label = f"{label} — {p.ticket_helpdesk}"
+        suggestions.append({
+            'type': 'preparazione',
+            'label': label,
+            'value': str(p.pk),
+            'url': reverse('dettaglio_preparazione', args=[p.pk])
+        })
+
+    # Deduplicate by label and limit
+    seen = set()
+    unique = []
+    for s in suggestions:
+        if s['label'] in seen:
+            continue
+        seen.add(s['label'])
+        unique.append(s)
+        if len(unique) >= 10:
+            break
+
+    return JsonResponse(unique, safe=False)
