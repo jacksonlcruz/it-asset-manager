@@ -38,6 +38,9 @@ def dashboard(request):
         stato_preparazione='Completato'
     ).order_by('data_pianificazione')[:20]
 
+    # Preparazioni recenti: ultime 10 (ordina per id decrescente come proxy per "create")
+    preparazioni_recenti = Preparazione.objects.all().order_by('-id')[:10]
+
     # Raccoglie tutto nel "contesto" da inviare alla pagina
     context = {
         'disponibili_office': disponibili_office,
@@ -46,6 +49,7 @@ def dashboard(request):
         'preparazioni_in_corso': preparazioni_in_corso,
         'pcs_piu_vecchi': pcs_piu_vecchi,
         'prossime_preparazioni': prossime_preparazioni,
+        'preparazioni_recenti': preparazioni_recenti,
         'page_title': 'Dashboard'
     }
 
