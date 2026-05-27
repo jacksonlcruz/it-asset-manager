@@ -1,0 +1,14 @@
+{
+  "repo": "https://github.com/jacksonlcruz/it-asset-manager.git",
+  "branch": "main",
+  "project_path": ".",
+  "python_exe": null,
+  "check_interval": 60,
+  "address": "127.0.0.1:8000",
+  "auto_update": true,
+  "auto_update_exe": true,
+  "exe_update_url": "file:///C:/Users/d5e6a92/Desktop/Progetti/it-asset-manager/launcher/remote_launcher_0.3.0.exe",
+  "exe_version_url": "file:///C:/Users/d5e6a92/Desktop/Progetti/it-asset-manager/launcher/exe_version.txt",
+  "exe_update_interval": 3600,
+  "proxy": "http://zproxy.idg.audi.vwg:9400"
+}
