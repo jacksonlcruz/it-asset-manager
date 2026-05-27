@@ -73,3 +73,11 @@ Note finali
 - Se vuoi, posso:
   - aggiungere ulteriori backup/rotazione in `post-merge`, o
   - creare e pubblicare un'immagine Docker con il DB precaricato (utile come artefatto condiviso).
+
+Nota sulla rimozione del log automatico
+------------------------------------
+
+Per richiesta del team, il file `log-modifiche.txt` e il workflow associato `.github/workflows/log-modifiche.yml` sono stati rimossi dal repository. Di conseguenza il progetto non mantiene più un changelog automatico all'interno del repository.
+
+Se preferisci una soluzione alternativa per registrare modifiche (es. commenti sui PR, issue dedicate, o un workflow che scriva un changelog esterno), posso implementarla: dimmi quale opzione preferisci.
+
