@@ -23,3 +23,11 @@ Files modified:
 - `post-merge`: esegue il backup del DB locale precedente in `.db_backups/` con timestamp prima di applicare migrations/fixtures.
 - Aggiornati `docs/SHARED_DB.md` e istruzioni per riflettere il comportamento automatico e il requisito che **entrambi** gli sviluppatori installino gli hook una volta.
 
+
+---- Push: 2026-05-27 12:14:03Z refs/heads/developgio by Giova982 ----
+2026-05-27T14:09:57+02:00 7a756e8 Giova982 <giovannibalbi900@etik.com>
+Message: chore(shared-db): add auto-rebase and post-merge backup; update docs and log
+Files added: 
+Files removed: 
+Files modified: 
+
