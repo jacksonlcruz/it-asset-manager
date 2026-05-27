@@ -73,17 +73,36 @@ WSGI_APPLICATION = 'asset_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Configuração do Banco de Dados PostgreSQL
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'it_asset_db',          # O nome do banco de dados que criamos
-        'USER': 'postgres',              # O usuário padrão do PostgreSQL
-        'PASSWORD': '08524679',    # Senha Banco de dados
-        'HOST': '127.0.0.1',             # Onde o banco de dados está rodando (seu PC)
-        'PORT': '5432',                  # A porta padrão
+import os
+
+# Database configuration
+# Behavior:
+# - If `USE_REPO_SQLITE=1` is set or a repo `db.sqlite3` exists and
+#   `FORCE_POSTGRES` is not set, the project will use the committed SQLite DB.
+# - Otherwise it falls back to PostgreSQL using environment variables when present.
+REPO_SQLITE = BASE_DIR / 'db.sqlite3'
+USE_REPO_SQLITE = os.environ.get('USE_REPO_SQLITE') == '1' or (
+    REPO_SQLITE.exists() and os.environ.get('FORCE_POSTGRES') != '1'
+)
+
+if USE_REPO_SQLITE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(REPO_SQLITE),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB', 'it_asset_db'),
+            'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '08524679'),
+            'HOST': os.environ.get('POSTGRES_HOST', '127.0.0.1'),
+            'PORT': os.environ.get('POSTGRES_PORT', '5432'),
+        }
+    }
 
 
 # Password validation
