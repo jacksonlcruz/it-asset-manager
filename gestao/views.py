@@ -1,7 +1,8 @@
 # gestao/views.py - VERSIONE CORRETTA E COMPLETA
 from django.shortcuts import render, redirect, get_object_or_404 #
 from django.db.models import Count, Q, OuterRef, Subquery
-from .models import Dispositivo, Utente, Assegnazione, Preparazione, Dipartimento
+from .models import Dispositivo, Utente, Assegnazione, Preparazione, Dipartimento, Sede
+import re
 from django.http import JsonResponse
 from django.contrib import messages
 from datetime import date, timedelta
@@ -139,8 +140,82 @@ def lista_dispositivi(request):
     return render(request, 'gestao/lista_dispositivi.html', context)
 
 def lista_preparazioni(request):
-    preparazioni_list = Preparazione.objects.all().order_by('-id')
-    context = {'preparazioni': preparazioni_list, 'page_title': 'Coda di Preparazione PC'}
+    # Recupera queryset di base (unsorted) per determinare colonne opzionali
+    base_qs = Preparazione.objects.all()
+
+    # Determina se mostrare colonne opzionali in funzione del contenuto
+    show_ticket = base_qs.filter(ticket_helpdesk__isnull=False).exclude(ticket_helpdesk='').exists()
+    show_device = base_qs.filter(Q(dispositivo_nuovo__isnull=False) | Q(dispositivo_vecchio__isnull=False)).exists()
+    show_notes = base_qs.filter(note_software__isnull=False).exclude(note_software='').exists()
+
+    # Normalizzazione dei dati (estrazione città, spostamento info software, pulizia)
+    # Ora la normalizzazione viene gestita tramite il comando di management
+    # `python manage.py normalize_preparazioni` (usare --dry-run per anteprima e
+    # --commit per applicare le modifiche). Evitiamo di eseguire scritture
+    # durante la renderizzazione della lista per non introdurre side-effect su GET.
+
+    # Default di ordinamento: usa ticket se presente, altrimenti ID
+    default_sort = '-ticket' if show_ticket else '-id'
+    sort_key = request.GET.get('sort', default_sort)
+
+    allowed_keys = [
+        'ticket', '-ticket',
+        'id', '-id',
+        'tipo', '-tipo',
+        'categoria', '-categoria',
+        'luogo', '-luogo',
+        'utente', '-utente',
+        'tecnico', '-tecnico',
+        'stato', '-stato',
+        'data', '-data'
+    ]
+    if sort_key not in allowed_keys:
+        sort_key = default_sort
+
+    # Se l'utente chiede di ordinare per ticket ma non ci sono ticket, fallback a ID
+    if sort_key in ('ticket', '-ticket') and not show_ticket:
+        sort_key = '-id'
+
+    sort_map = {
+        'ticket': 'ticket_helpdesk', '-ticket': '-ticket_helpdesk',
+        'id': 'id', '-id': '-id',
+        'tipo': 'tipo_richiesta', '-tipo': '-tipo_richiesta',
+        'categoria': 'categoria', '-categoria': '-categoria',
+        'luogo': 'luogo_intervento__nome', '-luogo': '-luogo_intervento__nome',
+        'utente': 'utente__cognome', '-utente': '-utente__cognome',
+        'tecnico': 'tecnico_responsabile__username', '-tecnico': '-tecnico_responsabile__username',
+        'stato': 'stato_preparazione', '-stato': '-stato_preparazione',
+        'data': 'data_pianificazione', '-data': '-data_pianificazione',
+    }
+
+    db_sort = sort_map.get(sort_key, default_sort)
+    preparazioni_list = base_qs.order_by(db_sort)
+
+    # Conta colonne per il colspan della riga vuota
+    columns_count = 0
+    columns_count += 1  # Ticket/ID
+    columns_count += 1  # Tipo Richiesta
+    columns_count += 1  # Categoria
+    columns_count += 1  # Luogo
+    columns_count += 1  # Dettagli Utente
+    if show_device:
+        columns_count += 1  # Dispositivo (opzionale)
+    columns_count += 1  # Tecnico responsabile
+    columns_count += 1  # Stato lavorazione
+    columns_count += 1  # Data pianificata
+    if show_notes:
+        columns_count += 1  # Note / Software (opzionale)
+    columns_count += 1  # Azioni
+
+    context = {
+        'preparazioni': preparazioni_list,
+        'page_title': 'Coda di Preparazione PC',
+        'current_sort': sort_key,
+        'show_ticket': show_ticket,
+        'show_device': show_device,
+        'show_notes': show_notes,
+        'columns_count': columns_count,
+    }
     return render(request, 'gestao/lista_preparazioni.html', context)
 
 # View que usa o formulário
